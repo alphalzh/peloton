@@ -16,6 +16,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <vector>
+#include <functional>
 
 #include "common/logger.h"
 
@@ -733,7 +734,7 @@ private:
     while (get_val_address(val_next) != nullptr) {
       if (!is_deleted_val_ptr(val_next)) {
         if (predicate(val_ptr->val)) {
-          predicate_satisfied = true;
+          *predicate_satisfied = true;
           return nullptr;
         }
         if (ValueCmpEqual(val_ptr->val, val)) {
@@ -745,7 +746,7 @@ private:
     }
     if (!is_deleted_val_ptr(val_next)) {
       if (predicate(val_ptr->val)) {
-        predicate_satisfied = true;
+        *predicate_satisfied = true;
         return nullptr;
       }
       if (ValueCmpEqual(val_ptr->val, val)) {

@@ -185,44 +185,89 @@ void SKIPLIST_INDEX_TYPE::Scan(
  */
 SKIPLIST_TEMPLATE_ARGUMENTS
 void SKIPLIST_INDEX_TYPE::ScanLimit(
-    const std::vector<type::Value> &value_list,
-    const std::vector<oid_t> &tuple_column_id_list,
-    const std::vector<ExpressionType> &expr_list,
+    UNUSED_ATTRIBUTE const std::vector<type::Value> &value_list,
+    UNUSED_ATTRIBUTE const std::vector<oid_t> &tuple_column_id_list,
+    UNUSED_ATTRIBUTE const std::vector<ExpressionType> &expr_list,
     ScanDirectionType scan_direction,
     std::vector<ValueType> &result,
     const ConjunctionScanPredicate *csp_p, uint64_t limit, uint64_t offset) {
-  // Only work with limit == 1 and offset == 0
-  // Because that gets translated to "min"
-  // But still since we could not access tuples in the table
-  // the index just fetches the first qualified key without further checking
-  // including checking for non-exact bounds!!!
-  if (csp_p->IsPointQuery() == false && limit == 1 && offset == 0) {
+
+  if (csp_p->IsPointQuery() == true) {
+    const storage::Tuple *point_query_key_p = csp_p->GetPointQueryKey();
+
+    KeyType point_query_key;
+    point_query_key.SetFromKey(point_query_key_p);
+
+    // Note: We could call ScanKey() to achieve better modularity
+    // (slightly less code), but since ScanKey() is a virtual function
+    // this would induce an overhead for point query, which must be highly
+    // optimized and super fast
+    container.GetValue(point_query_key, result);
+  } else if (csp_p->IsFullIndexScan() == true) {
+    // If it is a full index scan, then just do the scan
+    // until we have reached the end of the index by the same
+    // we take the snapshot of the last leaf node
+    for (auto scan_itr = container.Begin(); (scan_itr.IsEnd() == false);
+         scan_itr++) {
+      result.push_back(scan_itr.getValue());
+    }  // for it from begin() to end()
+  } else {
     const storage::Tuple *low_key_p = csp_p->GetLowKey();
     const storage::Tuple *high_key_p = csp_p->GetHighKey();
 
-    LOG_TRACE("ScanLimit() special case (limit = 1; offset = 0; ASCENDING): %s",
-              low_key_p->GetInfo().c_str());
+    LOG_TRACE("Partial scan low key: %s\n high key: %s, offset = %lld, limit = %lld",
+              low_key_p->GetInfo().c_str(), high_key_p->GetInfo().c_str(), offset, limit);
 
+    // Construct low key and high key in KeyType form, rather than
+    // the standard in-memory tuple
     KeyType index_low_key;
     KeyType index_high_key;
     index_low_key.SetFromKey(low_key_p);
     index_high_key.SetFromKey(high_key_p);
 
-    auto scan_itr = container.Begin(index_low_key);
+    uint64_t current = 0;
 
+    // Also we keep scanning until we have reached the end of the index
+    // or we have seen a key higher than the high key
     if (scan_direction == ScanDirectionType::FORWARD) {
-      if ((scan_itr.IsEnd() == false) &&
-          (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key))) {
-        result.push_back(scan_itr.getValue());
+      for (auto scan_itr = container.Begin(index_low_key);
+           (scan_itr.IsEnd() == false) &&
+           (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key));
+           scan_itr++) {
+        if (current == offset) {
+          if (result.size() < limit) {
+            result.push_back(scan_itr.getValue());
+          } else { // result.size == limit, reach upper bound
+            return;
+          }
+        } else {
+          current++;
+        }
       }
     } else {
       assert(scan_direction == ScanDirectionType::BACKWARD);
-
+      std::stack<ValueType> value_stack;
+      for (auto scan_itr = container.Begin(index_low_key);
+           (scan_itr.IsEnd() == false) &&
+           (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key));
+           scan_itr++) {
+        value_stack.push(scan_itr.getValue());
+      }
+      while(!value_stack.empty()) {
+        if (current == offset) {
+          if (result.size() < limit) {
+            result.push_back(value_stack.top());
+            value_stack.pop();
+          } else { // result.size == limit, reach upper bound
+            return;
+          }
+        } else {
+          current++;
+          value_stack.pop();
+        }
+      }
     }
 
-  } else {
-    Scan(value_list, tuple_column_id_list, expr_list, scan_direction, result,
-         csp_p);
   }
   return;
 }
