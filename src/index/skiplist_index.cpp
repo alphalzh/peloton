@@ -89,10 +89,61 @@ void SKIPLIST_INDEX_TYPE::Scan(
     UNUSED_ATTRIBUTE const std::vector<type::Value> &value_list,
     UNUSED_ATTRIBUTE const std::vector<oid_t> &tuple_column_id_list,
     UNUSED_ATTRIBUTE const std::vector<ExpressionType> &expr_list,
-    UNUSED_ATTRIBUTE ScanDirectionType scan_direction,
-    UNUSED_ATTRIBUTE std::vector<ValueType> &result,
-    UNUSED_ATTRIBUTE const ConjunctionScanPredicate *csp_p) {
-  // TODO: Add your implementation here
+    ScanDirectionType scan_direction, std::vector<ValueType> &result,
+    const ConjunctionScanPredicate *csp_p) {
+  if (scan_direction == ScanDirectionType::INVALID) {
+    throw Exception("Invalid scan direction \n");
+  }
+
+  LOG_TRACE("Scan() Point Query = %d; Full Scan = %d ", csp_p->IsPointQuery(),
+            csp_p->IsFullIndexScan());
+
+  if (csp_p->IsPointQuery() == true) {
+    const storage::Tuple *point_query_key_p = csp_p->GetPointQueryKey();
+
+    KeyType point_query_key;
+    point_query_key.SetFromKey(point_query_key_p);
+
+    // Note: We could call ScanKey() to achieve better modularity
+    // (slightly less code), but since ScanKey() is a virtual function
+    // this would induce an overhead for point query, which must be highly
+    // optimized and super fast
+    container.GetValue(point_query_key, result);
+  } else if (csp_p->IsFullIndexScan() == true) {
+    // If it is a full index scan, then just do the scan
+    // until we have reached the end of the index by the same
+    // we take the snapshot of the last leaf node
+    for (auto scan_itr = container.Begin(); (scan_itr.IsEnd() == false);
+         scan_itr++) {
+      result.push_back(scan_itr.getValue());
+    }  // for it from begin() to end()
+  } else {
+    const storage::Tuple *low_key_p = csp_p->GetLowKey();
+    const storage::Tuple *high_key_p = csp_p->GetHighKey();
+
+    LOG_TRACE("Partial scan low key: %s\n high key: %s",
+              low_key_p->GetInfo().c_str(), high_key_p->GetInfo().c_str());
+
+    // Construct low key and high key in KeyType form, rather than
+    // the standard in-memory tuple
+    KeyType index_low_key;
+    KeyType index_high_key;
+    index_low_key.SetFromKey(low_key_p);
+    index_high_key.SetFromKey(high_key_p);
+
+    // We use bwtree Begin() to first reach the lower bound
+    // of the search key
+    // Also we keep scanning until we have reached the end of the index
+    // or we have seen a key higher than the high key
+    for (auto scan_itr = container.Begin(index_low_key);
+         (scan_itr.IsEnd() == false) &&
+         (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key));
+         scan_itr++) {
+      result.push_back(scan_itr.getValue());
+    }
+  }  // if is full scan
+
+
   return;
 }
 
@@ -114,9 +165,14 @@ void SKIPLIST_INDEX_TYPE::ScanLimit(
 }
 
 SKIPLIST_TEMPLATE_ARGUMENTS
-void SKIPLIST_INDEX_TYPE::ScanAllKeys(
-    UNUSED_ATTRIBUTE std::vector<ValueType> &result) {
-  // TODO: Add your implementation here
+void SKIPLIST_INDEX_TYPE::ScanAllKeys(std::vector<ValueType> &result) {
+  auto it = container.Begin();
+
+  // scan all entries
+  while (!it.IsEnd()) {
+    result.push_back(it.getValue());
+    it++;
+  }
   return;
 }
 

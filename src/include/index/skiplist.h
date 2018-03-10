@@ -36,6 +36,9 @@ private: // pre-declare private class names
   class ValueNode;
   // TODO: Add your declarations here
 public:
+  // KeyType-ValueType pair
+  using KeyValuePair = std::pair<KeyType, ValueType>;
+
   SkipList(bool start_gc_thread = true,
            bool unique_key = false,
            KeyComparator p_key_cmp_obj = KeyComparator{},
@@ -47,7 +50,6 @@ public:
       // Value equality checker and hasher
       value_eq_obj{p_value_eq_obj}
   {
-    LOG_DEBUG("Skip List Constructor called. ");
     // initialize head node
     srand(time(nullptr));
     int init_level = get_rand_level();
@@ -78,6 +80,8 @@ public:
 
   /*
    * Insert - insert a key-value pair into index
+   *
+   * assume value is unique under a key
    * */
   bool Insert(const KeyType &key, const ValueType &value) {
     ValueNode *val_ptr = new ValueNode(value);
@@ -123,13 +127,28 @@ retry:
       }
       if (unique_key) {
         return false;
-      } else { // duplicate key allowed
-        val_ptr->next = old_val_ptr;
-        // install current value into the value linked list
-        while (!(succs[0]->val_ptr.compare_exchange_strong(old_val_ptr, val_ptr))) {
+      } else { // duplicate key allowed, value should be unique under one key
+        while (true) {
           old_val_ptr = succs[0]->val_ptr.load();
+          if (old_val_ptr == nullptr) { // current succesor is deleted
+            delete_node(succs[0]);
+            goto retry;
+          }
+          // current successor exist
+          old_val_ptr = get_tail_value_with_diff(old_val_ptr, val_ptr->val);
+          if (old_val_ptr == nullptr) { // there is an exist value in the value list equal to val_ptr->val
+            // TODO: GC ValueNode
+            return false;
+          }
+          ValueNode *val_next = old_val_ptr->next.load();
+          if (!is_deleted_val_ptr(val_next)) { // tail is not deleted
+            if (old_val_ptr->next.compare_exchange_strong(val_next, val_ptr)) {
+              // install current value at the end of value linked list
+              return true;
+            }
+            // install fail, just run the loop again, retry insertion in the value list
+          }
         }
-        return true;
       }
     }
 
@@ -175,12 +194,12 @@ retry:
    * Delete - delete key-value pair if the pair exist
    * */
   bool Delete(const KeyType &key, const ValueType &value) {
-    LOG_DEBUG("%s: called", __func__);
+//    LOG_DEBUG("%s: called", __func__);
     Node **preds = nullptr; // predecessors
     Node **succs = nullptr; // successors
     int level = 0;
     Search(key, preds, succs, level);
-    if (!KeyCmpEqual(succs[0]->key, key)) { // key not exist
+    if (succs[0] == nullptr || !KeyCmpEqual(succs[0]->key, key)) { // key not exist
       return false;
     }
     ValueNode *old_val_ptr = succs[0]->val_ptr.load();
@@ -214,7 +233,7 @@ retry:
             old_val_ptr = succs[0]->val_ptr.load();
           }
           if (new_val_ptr == nullptr) { // all values are deleted, the key Node should be deleted too
-            LOG_DEBUG("%s: val all deleted, delete key", __func__);
+//            LOG_DEBUG("%s: val all deleted, delete key", __func__);
             delete_node(succs[0]);
           }
         }
@@ -231,13 +250,13 @@ retry:
    * GetValue - get values with key and store them in value_list
    * */
   void GetValue(const KeyType &key, std::vector<ValueType> &value_list) {
-    LOG_DEBUG("%s: called", __func__);
+//    LOG_DEBUG("%s: called", __func__);
     Node **prods, **succs;
     int level = 0;
     Search(key, prods, succs, level);
-    LOG_DEBUG("%s: level=%d", __func__, level);
+//    LOG_DEBUG("%s: level=%d", __func__, level);
     if (succs[0]!= nullptr && KeyCmpEqual(succs[0]->key, key)) {
-      LOG_DEBUG("%s: find key", __func__);
+//      LOG_DEBUG("%s: find key", __func__);
       ValueNode *val_ptr = succs[0]->val_ptr.load(), *val_next;
       while (val_ptr != nullptr) {
         val_next = val_ptr->next.load();
@@ -302,6 +321,157 @@ retry:
     return;
   }
 
+
+  /*
+   * class ForwardIterator - Iterator that supports forward iteration of skip list elements
+   */
+  class ForwardIterator {
+  private:
+    Node *node_ptr;
+    ValueNode *val_ptr;
+
+  public:
+    ForwardIterator(Node *node_ptr, ValueNode *val_ptr) {
+      this->node_ptr = node_ptr;
+      this->val_ptr = val_ptr;
+    }
+
+    /*
+     * IsEnd() - Whether the current iterator caches the last page and
+     *           the iterator points to the last element
+     */
+    bool IsEnd() const {
+      return node_ptr == nullptr || val_ptr == nullptr;
+    }
+
+    /*
+     * operator->() - Returns the value pointer pointed to by this iterator
+     *
+     * Note that this function returns a contsnat pointer which can be used
+     * to access members of the value, but cannot modify
+     */
+//    inline const KeyValuePair *operator->() { return &KeyValuePair(node_ptr->key, val_ptr->val); }
+
+    inline const KeyType getKey() { return node_ptr->key; }
+
+    inline const ValueType getValue() { return val_ptr->val; }
+
+    ~ForwardIterator() {
+      return;
+    }
+
+    /*
+     * Prefix operator++ - Move the iterator ahead and return the new iterator
+     *
+     * This operator moves iterator first, and then return the operator itself
+     * as value of expression
+     *
+     * If the iterator is end() iterator then we do nothing
+     */
+    inline ForwardIterator &operator++() {
+      if (IsEnd()) {
+        return *this;
+      }
+
+      MoveAheadByOne();
+
+      return *this;
+    }
+
+    /*
+     * Postfix operator++ - Move the iterator ahead, and return the old one
+     *
+     * For end() iterator we do not do anything but return the same iterator
+     */
+    inline ForwardIterator operator++(int) {
+      if (IsEnd()) {
+        return *this;
+      }
+
+      // Make a copy of the current one before advancing
+      // This will increase ref count temporarily, but it is always consistent
+      ForwardIterator temp = *this;
+
+      MoveAheadByOne();
+
+      return temp;
+    }
+
+    /*
+     * MoveAheadByOne() - Move the iterator ahead by one
+     *
+     * The caller is responsible for checking whether the iterator has reached
+     * its end. If iterator has reached end then assertion fails.
+     */
+    inline void MoveAheadByOne() {
+      // Could not do this on an empty iterator
+      PL_ASSERT(node_ptr != nullptr);
+      PL_ASSERT(val_ptr != nullptr);
+      val_ptr = get_first_exist_value(val_ptr->next.load());
+      if (val_ptr != nullptr) // value chain is not exhausted yet
+        return;
+      // value chain is exhausted, find next exist node's key and exist value of that key
+      node_ptr = get_node_address(node_ptr->next[0].load());
+      while (node_ptr != nullptr) {
+        if (is_deleted_node(node_ptr->next[0].load())) { // node is marked as deleted
+          node_ptr = get_node_address(node_ptr->next[0].load());
+        } else { // node exist
+          val_ptr = get_first_exist_value(node_ptr->val_ptr.load());
+          if (val_ptr != nullptr) {
+            break;
+          } else {
+            node_ptr = get_node_address(node_ptr->next[0].load());
+          }
+        }
+      }
+      return;
+    }
+  };  // ForwardIterator
+
+  /*
+  * Begin() - Return an iterator pointing the first element in the skip list
+  */
+  ForwardIterator Begin() {
+    Node *node_ptr = get_node_address(head.load()->next[0]);
+    while (node_ptr != nullptr && is_deleted_node(node_ptr->next[0].load())) {
+      node_ptr = get_node_address(head.load()->next[0]);
+    }
+    ValueNode *val_ptr = nullptr;
+    if (node_ptr != nullptr) {
+      val_ptr = get_first_exist_value(node_ptr->val_ptr.load());
+    }
+    return ForwardIterator(node_ptr, val_ptr);
+  }
+
+  /*
+   * Begin() - Return an iterator using a given key
+   *
+   * The iterator returned will points to a data item whose key is greater than
+   * or equal to the given start key. If such key does not exist then it will
+   * be the smallest key that is greater than start_key
+   */
+  ForwardIterator Begin(const KeyType &start_key) {
+    Node **preds = nullptr; // predecessors
+    Node **succs = nullptr; // successors
+    int level = 0;
+
+    Search(start_key, preds, succs, level);
+
+    Node *node_ptr = succs[0];
+    ValueNode *val_ptr = nullptr;
+
+    if (node_ptr != nullptr) {
+      val_ptr = node_ptr->val_ptr.load();
+      val_ptr = get_first_exist_value(val_ptr);
+    }
+
+    return ForwardIterator(node_ptr, val_ptr);
+  }
+
+  inline bool KeyCmpLessEqual(const KeyType &key1, const KeyType &key2) const {
+    return key_cmp_obj(key1, key2) || key_eq_obj(key1, key2);
+  }
+
 private:
   // xingyuj1
   // value node is used to build linked list of ValueType to use CAS in SkipList node
@@ -323,7 +493,7 @@ private:
     std::atomic<ValueNode*> val_ptr; // linked list to support duplicate key
 
     Node(int level, KeyType key, ValueNode *val_ptr) {
-      LOG_DEBUG("Skip List New Node construct");
+//      LOG_DEBUG("Skip List New Node construct");
       this->level = level;
       this->key = key;
       next = new std::atomic<Node *>[level];
@@ -359,8 +529,8 @@ private:
   std::atomic<Node*> head;
   // unique key mark whether to use duplicate key
   bool unique_key;
-  const long long ADDRESS_MASK = ~0x1;
-  const long long DELETE_MASK = 0x1;
+  static const long long ADDRESS_MASK = ~0x1;
+  static const long long DELETE_MASK = 0x1;
 
   /*
    * delete_node - mark last bit in address in each level, logical delete node
@@ -379,7 +549,7 @@ private:
   /*
    * is_deleted_node - judge whether the next node is deleted from marked bit in pointer
    * */
-  inline bool is_deleted_node(Node* p) {
+  static inline bool is_deleted_node(Node* p) {
     long long t = reinterpret_cast<long long>(p) & DELETE_MASK;
     return (t == DELETE_MASK);
   }
@@ -387,7 +557,7 @@ private:
   /*
    * get_node_address - get address from pointer with a marked bit
    * */
-  inline Node* get_node_address(Node* p) {
+  static inline Node* get_node_address(Node* p) {
     long long t = reinterpret_cast<long long>(p) & ADDRESS_MASK;
     return reinterpret_cast<Node*>(t);
   }
@@ -400,32 +570,49 @@ private:
     return reinterpret_cast<Node*>(t);
   }
 
+  /*
+   * get_first_exist_value - return the first exist value node start from val_ptr
+   * */
+  static inline ValueNode* get_first_exist_value(ValueNode *val_ptr) {
+    while (val_ptr != nullptr && is_deleted_val_ptr(val_ptr->next.load())) {
+      val_ptr = get_val_address(val_ptr->next.load());
+    }
+    return val_ptr;
+  }
+
+  /*
+   * get_tail_value_with_diff - return tail value in the value list, where do not contain "val"
+   *                            val_ptr should not be nullptr
+   *                            return nullptr if meet existing node with same value with value
+   * */
+  inline ValueNode* get_tail_value_with_diff(ValueNode *val_ptr, const ValueType& val) {
+    ValueNode *val_next = val_ptr->next.load();
+    while (get_val_address(val_next) != nullptr) {
+      if (!is_deleted_val_ptr(val_next) && ValueCmpEqual(val_ptr->val, val)) {
+        return nullptr;
+      }
+      val_ptr = get_val_address(val_next);
+      val_next = val_ptr->next.load();
+    }
+    if (!is_deleted_val_ptr(val_next) && ValueCmpEqual(val_ptr->val, val)) {
+      return nullptr;
+    }
+    return val_ptr;
+  }
 
   /*
    * traverse_value_list - traverse ValueNode linked list, connect exist ValueNodes by changing next pointers
    * return head ValueNode pointer
    * */
   ValueNode* traverse_value_list(ValueNode *val_ptr) {
-    ValueNode* head_val_ptr = val_ptr;
+    // find first exist node or just get nullptr
+    ValueNode* head_val_ptr = get_first_exist_value(val_ptr);
     ValueNode *left, *right, *old_next;
-    // find first exist node
-    while (true) {
-      if (head_val_ptr == nullptr)
-        break;
-      // head_val_ptr is not nullptr
-      old_next = head_val_ptr->next.load();
-      if (!is_deleted_val_ptr(old_next)) // head_val_ptr exist
-        break;
-      head_val_ptr = get_val_address(old_next);
-    }
 
     left = head_val_ptr;
     while (left != nullptr) {
       old_next = left->next.load();
-      right = old_next;
-      while (right != nullptr && is_deleted_val_ptr(right->next.load())) {
-        right = get_val_address(right->next.load());
-      }
+      right = get_first_exist_value(old_next);
       if (old_next != right) { // left and right are not adjancent
         // update left->next
         while (!left->next.compare_exchange_strong(old_next, right)) {
@@ -470,7 +657,7 @@ private:
   /*
    * is_deleted_val_ptr - judge whether the next val_ptr is deleted from marked bit in pointer
    * */
-  inline bool is_deleted_val_ptr(ValueNode* p) {
+  static inline bool is_deleted_val_ptr(ValueNode* p) {
     long long t = reinterpret_cast<long long>(p) & DELETE_MASK;
     return (t == DELETE_MASK);
   }
@@ -478,7 +665,7 @@ private:
   /*
    * get_val_address - get address from pointer with a marked bit
    * */
-  inline ValueNode* get_val_address(ValueNode* p) {
+  static inline ValueNode* get_val_address(ValueNode* p) {
     long long t = reinterpret_cast<long long>(p) & ADDRESS_MASK;
     return reinterpret_cast<ValueNode*>(t);
   }
