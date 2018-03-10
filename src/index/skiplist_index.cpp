@@ -17,6 +17,8 @@
 #include "statistics/stats_aggregator.h"
 #include "storage/tuple.h"
 
+#include <stack>
+
 namespace peloton {
 namespace index {
 
@@ -72,11 +74,27 @@ bool SKIPLIST_INDEX_TYPE::DeleteEntry(const storage::Tuple *key,
 
 SKIPLIST_TEMPLATE_ARGUMENTS
 bool SKIPLIST_INDEX_TYPE::CondInsertEntry(
-    UNUSED_ATTRIBUTE const storage::Tuple *key,
-    UNUSED_ATTRIBUTE ItemPointer *value,
-    UNUSED_ATTRIBUTE std::function<bool(const void *)> predicate) {
-  bool ret = false;
-  // TODO: Add your implementation here
+    const storage::Tuple *key, ItemPointer *value,
+    std::function<bool(const void *)> predicate) {
+  KeyType index_key;
+  index_key.SetFromKey(key);
+
+  bool predicate_satisfied = false;
+
+  // This function will complete them in one step
+  // predicate will be set to nullptr if the predicate
+  // returns true for some value
+  bool ret = container.ConditionalInsert(index_key, value, predicate,
+                                         &predicate_satisfied);
+
+  // If predicate is not satisfied then we know insertion successes
+  if (predicate_satisfied == false) {
+    // So it should always succeed?
+    assert(ret == true);
+  } else {
+    assert(ret == false);
+  }
+
   return ret;
 }
 
@@ -131,16 +149,30 @@ void SKIPLIST_INDEX_TYPE::Scan(
     index_low_key.SetFromKey(low_key_p);
     index_high_key.SetFromKey(high_key_p);
 
-    // We use bwtree Begin() to first reach the lower bound
-    // of the search key
     // Also we keep scanning until we have reached the end of the index
     // or we have seen a key higher than the high key
-    for (auto scan_itr = container.Begin(index_low_key);
-         (scan_itr.IsEnd() == false) &&
-         (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key));
-         scan_itr++) {
-      result.push_back(scan_itr.getValue());
+    if (scan_direction == ScanDirectionType::FORWARD) {
+      for (auto scan_itr = container.Begin(index_low_key);
+           (scan_itr.IsEnd() == false) &&
+           (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key));
+           scan_itr++) {
+        result.push_back(scan_itr.getValue());
+      }
+    } else {
+      assert(scan_direction == ScanDirectionType::BACKWARD);
+      std::stack<ValueType> value_stack;
+      for (auto scan_itr = container.Begin(index_low_key);
+           (scan_itr.IsEnd() == false) &&
+           (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key));
+           scan_itr++) {
+        value_stack.push(scan_itr.getValue());
+      }
+      while(!value_stack.empty()) {
+        result.push_back(value_stack.top());
+        value_stack.pop();
+      }
     }
+
   }  // if is full scan
 
 
@@ -153,14 +185,45 @@ void SKIPLIST_INDEX_TYPE::Scan(
  */
 SKIPLIST_TEMPLATE_ARGUMENTS
 void SKIPLIST_INDEX_TYPE::ScanLimit(
-    UNUSED_ATTRIBUTE const std::vector<type::Value> &value_list,
-    UNUSED_ATTRIBUTE const std::vector<oid_t> &tuple_column_id_list,
-    UNUSED_ATTRIBUTE const std::vector<ExpressionType> &expr_list,
-    UNUSED_ATTRIBUTE ScanDirectionType scan_direction,
-    UNUSED_ATTRIBUTE std::vector<ValueType> &result,
-    UNUSED_ATTRIBUTE const ConjunctionScanPredicate *csp_p,
-    UNUSED_ATTRIBUTE uint64_t limit, UNUSED_ATTRIBUTE uint64_t offset) {
-  // TODO: Add your implementation here
+    const std::vector<type::Value> &value_list,
+    const std::vector<oid_t> &tuple_column_id_list,
+    const std::vector<ExpressionType> &expr_list,
+    ScanDirectionType scan_direction,
+    std::vector<ValueType> &result,
+    const ConjunctionScanPredicate *csp_p, uint64_t limit, uint64_t offset) {
+  // Only work with limit == 1 and offset == 0
+  // Because that gets translated to "min"
+  // But still since we could not access tuples in the table
+  // the index just fetches the first qualified key without further checking
+  // including checking for non-exact bounds!!!
+  if (csp_p->IsPointQuery() == false && limit == 1 && offset == 0) {
+    const storage::Tuple *low_key_p = csp_p->GetLowKey();
+    const storage::Tuple *high_key_p = csp_p->GetHighKey();
+
+    LOG_TRACE("ScanLimit() special case (limit = 1; offset = 0; ASCENDING): %s",
+              low_key_p->GetInfo().c_str());
+
+    KeyType index_low_key;
+    KeyType index_high_key;
+    index_low_key.SetFromKey(low_key_p);
+    index_high_key.SetFromKey(high_key_p);
+
+    auto scan_itr = container.Begin(index_low_key);
+
+    if (scan_direction == ScanDirectionType::FORWARD) {
+      if ((scan_itr.IsEnd() == false) &&
+          (container.KeyCmpLessEqual(scan_itr.getKey(), index_high_key))) {
+        result.push_back(scan_itr.getValue());
+      }
+    } else {
+      assert(scan_direction == ScanDirectionType::BACKWARD);
+
+    }
+
+  } else {
+    Scan(value_list, tuple_column_id_list, expr_list, scan_direction, result,
+         csp_p);
+  }
   return;
 }
 
