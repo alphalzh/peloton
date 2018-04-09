@@ -20,7 +20,7 @@
 #include "settings/settings_manager.h"
 #include "statistics/stats_aggregator.h"
 #include "storage/tile_group.h"
-#include "boost/thread/shared_mutex.hpp"
+#include "common/synchronization/readwrite_latch.h"
 
 namespace peloton {
 namespace concurrency {
@@ -39,7 +39,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     // transaction processing with decentralized epoch manager
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::SNAPSHOT_READ);
-    txn = new TransactionContext(thread_id, type, read_id, &mtx_);
+    txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
     //txn->LockShared();
 
   } else if (type == IsolationLevelType::SNAPSHOT) {
@@ -52,10 +52,10 @@ TransactionContext *TransactionManager::BeginTransaction(
       cid_t commit_id = EpochManagerFactory::GetInstance().EnterEpoch(
           thread_id, TimestampType::COMMIT);
 
-      txn = new TransactionContext(thread_id, type, read_id, commit_id, &mtx_);
+      txn = new TransactionContext(thread_id, type, read_id, commit_id, &rw_lock_);
       //txn->LockShared();
     } else {
-      txn = new TransactionContext(thread_id, type, read_id, &mtx_);
+      txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
       //txn->LockShared();
     }
 
@@ -67,7 +67,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     // transaction processing with decentralized epoch manager
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::READ);
-    txn = new TransactionContext(thread_id, type, read_id, &mtx_);
+    txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
     //txn->LockShared();
   }
 

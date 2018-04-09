@@ -22,7 +22,7 @@
 #include "concurrency/transaction_context.h"
 #include "concurrency/epoch_manager_factory.h"
 #include "common/logger.h"
-#include "boost/thread/shared_mutex.hpp"
+#include "common/synchronization/readwrite_latch.h"
 
 namespace peloton {
 
@@ -162,7 +162,7 @@ class TransactionManager {
   //===--------------------------------------------------------------------===//
   // Mutex for support add index
   //===--------------------------------------------------------------------===//
-  boost::upgrade_mutex mtx_;
+  common::synchronization::ReadWriteLatch rw_lock_;
 
 };
 }  // namespace storage

@@ -23,7 +23,7 @@
 #include "common/item_pointer.h"
 #include "common/printable.h"
 #include "common/internal_types.h"
-#include "boost/thread/shared_mutex.hpp"
+#include "common/synchronization/readwrite_latch.h"
 
 namespace peloton {
 
@@ -43,21 +43,21 @@ class TransactionContext : public Printable {
 
  public:
   TransactionContext(const size_t thread_id, const IsolationLevelType isolation,
-              const cid_t &read_id, boost::upgrade_mutex *mtx);
+              const cid_t &read_id, common::synchronization::ReadWriteLatch *rw_lock);
 
   TransactionContext(const size_t thread_id, const IsolationLevelType isolation,
-              const cid_t &read_id, const cid_t &commit_id, boost::upgrade_mutex *mtx);
+              const cid_t &read_id, const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock);
 
   ~TransactionContext();
 
  private:
   void Init(const size_t thread_id, const IsolationLevelType isolation,
-            const cid_t &read_id, boost::upgrade_mutex *mtx) {
-    Init(thread_id, isolation, read_id, read_id, mtx);
+            const cid_t &read_id, common::synchronization::ReadWriteLatch *rw_lock) {
+    Init(thread_id, isolation, read_id, read_id, rw_lock);
   }
 
   void Init(const size_t thread_id, const IsolationLevelType isolation,
-            const cid_t &read_id, const cid_t &commit_id, boost::upgrade_mutex *mtx);
+            const cid_t &read_id, const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock);
 
  public:
   //===--------------------------------------------------------------------===//
@@ -159,22 +159,27 @@ class TransactionContext : public Printable {
     return isolation_level_;
   }
 
+  /*
   // Lock the mutex in a shared state
-  void LockShared() {mtx_->lock_shared();}
+  void LockShared() {rw_lock_->ReadLock();}
 
   // Unlock the mutex from shared state
-  void UnlockShared() {mtx_->unlock_shared();}
+  void UnlockShared() {rw_lock_->Unlock();}
 
   // Trys atomically unlock the mutex from shared state and transfer to
   // exclusive state.
   void LockToExclusive(){
-    mtx_->unlock_shared();
-    mtx_->lock();
+    rw_lock_->Unlock();
+    rw_lock_->WriteLock();
   }
 
   // Atomically unlock the mutex from exclusive state and transfer to
   // shared state.
-  void LockToShared(){mtx_->unlock_and_lock_shared();}
+  void LockToShared(){
+    rw_lock_->Unlock();
+    rw_lock_->ReadLock();
+  }
+  */
 
   // cache for table catalog objects
   catalog::CatalogCache catalog_cache;
@@ -230,7 +235,7 @@ class TransactionContext : public Printable {
   //===--------------------------------------------------------------------===//
   // Mutex for support add index, pointer to mutex in transaction_manager
   //===--------------------------------------------------------------------===//
-  boost::upgrade_mutex *mtx_;
+  common::synchronization::ReadWriteLatch *rw_lock_;
 };
 
 }  // namespace concurrency

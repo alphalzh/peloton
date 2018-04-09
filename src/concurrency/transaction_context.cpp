@@ -18,7 +18,7 @@
 #include "common/platform.h"
 #include "common/macros.h"
 #include "trigger/trigger.h"
-#include "boost/thread/shared_mutex.hpp"
+#include "common/synchronization/readwrite_latch.h"
 
 #include <chrono>
 #include <thread>
@@ -51,21 +51,21 @@ namespace concurrency {
 
 TransactionContext::TransactionContext(const size_t thread_id,
                          const IsolationLevelType isolation,
-                         const cid_t &read_id, boost::upgrade_mutex *mtx) {
-  Init(thread_id, isolation, read_id, mtx);
+                         const cid_t &read_id, common::synchronization::ReadWriteLatch *rw_lock) {
+  Init(thread_id, isolation, read_id, rw_lock);
 }
 
 TransactionContext::TransactionContext(const size_t thread_id,
                          const IsolationLevelType isolation,
-                         const cid_t &read_id, const cid_t &commit_id, boost::upgrade_mutex *mtx) {
-  Init(thread_id, isolation, read_id, commit_id, mtx);
+                         const cid_t &read_id, const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock) {
+  Init(thread_id, isolation, read_id, commit_id, rw_lock);
 }
 
 TransactionContext::~TransactionContext() {}
 
 void TransactionContext::Init(const size_t thread_id,
                        const IsolationLevelType isolation, const cid_t &read_id,
-                       const cid_t &commit_id, boost::upgrade_mutex *mtx) {
+                       const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock) {
   read_id_ = read_id;
 
   // commit id can be set at a transaction's commit phase.
@@ -90,7 +90,7 @@ void TransactionContext::Init(const size_t thread_id,
   on_commit_triggers_.reset();
 
   // Set the pointer to r/w mutex in transaction manager
-  mtx_ = mtx;
+  rw_lock_ = rw_lock;
 }
 
 RWType TransactionContext::GetRWType(const ItemPointer &location) {
