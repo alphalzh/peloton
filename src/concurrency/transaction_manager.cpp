@@ -39,7 +39,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     // transaction processing with decentralized epoch manager
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::SNAPSHOT_READ);
-    txn = new TransactionContext(thread_id, type, read_id, mtx_);
+    txn = new TransactionContext(thread_id, type, read_id, &mtx_);
     //txn->LockShared();
 
   } else if (type == IsolationLevelType::SNAPSHOT) {
@@ -52,10 +52,10 @@ TransactionContext *TransactionManager::BeginTransaction(
       cid_t commit_id = EpochManagerFactory::GetInstance().EnterEpoch(
           thread_id, TimestampType::COMMIT);
 
-      txn = new TransactionContext(thread_id, type, read_id, commit_id, mtx_);
+      txn = new TransactionContext(thread_id, type, read_id, commit_id, &mtx_);
       //txn->LockShared();
     } else {
-      txn = new TransactionContext(thread_id, type, read_id, mtx_);
+      txn = new TransactionContext(thread_id, type, read_id, &mtx_);
       //txn->LockShared();
     }
 
@@ -67,7 +67,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     // transaction processing with decentralized epoch manager
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::READ);
-    txn = new TransactionContext(thread_id, type, read_id, mtx_);
+    txn = new TransactionContext(thread_id, type, read_id, &mtx_);
     //txn->LockShared();
   }
 
