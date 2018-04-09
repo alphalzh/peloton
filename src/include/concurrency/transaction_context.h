@@ -23,6 +23,7 @@
 #include "common/item_pointer.h"
 #include "common/printable.h"
 #include "common/internal_types.h"
+#include "boost/thread/shared_mutex.hpp"
 
 namespace peloton {
 
@@ -42,21 +43,21 @@ class TransactionContext : public Printable {
 
  public:
   TransactionContext(const size_t thread_id, const IsolationLevelType isolation,
-              const cid_t &read_id);
+              const cid_t &read_id, boost::upgrade_mutex &mtx);
 
   TransactionContext(const size_t thread_id, const IsolationLevelType isolation,
-              const cid_t &read_id, const cid_t &commit_id);
+              const cid_t &read_id, const cid_t &commit_id, boost::upgrade_mutex &mtx);
 
   ~TransactionContext();
 
  private:
   void Init(const size_t thread_id, const IsolationLevelType isolation,
-            const cid_t &read_id) {
-    Init(thread_id, isolation, read_id, read_id);
+            const cid_t &read_id, boost::upgrade_mutex &mtx) {
+    Init(thread_id, isolation, read_id, read_id, mtx);
   }
 
   void Init(const size_t thread_id, const IsolationLevelType isolation,
-            const cid_t &read_id, const cid_t &commit_id);
+            const cid_t &read_id, const cid_t &commit_id, boost::upgrade_mutex &mtx);
 
  public:
   //===--------------------------------------------------------------------===//
@@ -158,6 +159,23 @@ class TransactionContext : public Printable {
     return isolation_level_;
   }
 
+  // Lock the mutex in a shared state
+  inline void LockShared() {mtx_->lock_shared();}
+
+  // Unlock the mutex from shared state
+  inline void UnlockShared() {mtx_->unlock_shared();}
+
+  // Trys atomically unlock the mutex from shared state and transfer to
+  // exclusive state.
+  inline void LockToExclusive(){
+    mtx_->unlock_shared();
+    mtx_->lock();
+  }
+
+  // Atomically unlock the mutex from exclusive state and transfer to
+  // shared state.
+  inline void LockToShared(){mtx_->unlock_and_lock_shared();}
+
   // cache for table catalog objects
   catalog::CatalogCache catalog_cache;
 
@@ -208,6 +226,11 @@ class TransactionContext : public Printable {
   IsolationLevelType isolation_level_;
 
   std::unique_ptr<trigger::TriggerSet> on_commit_triggers_;
+
+  //===--------------------------------------------------------------------===//
+  // Mutex for support add index, pointer to mutex in transaction_manager
+  //===--------------------------------------------------------------------===//
+  boost::upgrade_mutex *mtx_;
 };
 
 }  // namespace concurrency

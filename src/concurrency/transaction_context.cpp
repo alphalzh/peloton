@@ -18,6 +18,7 @@
 #include "common/platform.h"
 #include "common/macros.h"
 #include "trigger/trigger.h"
+#include "boost/thread/shared_mutex.hpp"
 
 #include <chrono>
 #include <thread>
@@ -50,21 +51,21 @@ namespace concurrency {
 
 TransactionContext::TransactionContext(const size_t thread_id,
                          const IsolationLevelType isolation,
-                         const cid_t &read_id) {
-  Init(thread_id, isolation, read_id);
+                         const cid_t &read_id, boost::upgrade_mutex &mtx) {
+  Init(thread_id, isolation, read_id, mtx);
 }
 
 TransactionContext::TransactionContext(const size_t thread_id,
                          const IsolationLevelType isolation,
-                         const cid_t &read_id, const cid_t &commit_id) {
-  Init(thread_id, isolation, read_id, commit_id);
+                         const cid_t &read_id, const cid_t &commit_id, boost::upgrade_mutex &mtx) {
+  Init(thread_id, isolation, read_id, commit_id, mtx);
 }
 
 TransactionContext::~TransactionContext() {}
 
 void TransactionContext::Init(const size_t thread_id,
                        const IsolationLevelType isolation, const cid_t &read_id,
-                       const cid_t &commit_id) {
+                       const cid_t &commit_id, boost::upgrade_mutex &mtx) {
   read_id_ = read_id;
 
   // commit id can be set at a transaction's commit phase.
@@ -87,6 +88,9 @@ void TransactionContext::Init(const size_t thread_id,
   gc_object_set_.reset(new GCObjectSet());
 
   on_commit_triggers_.reset();
+
+  // Set the pointer to r/w mutex in transaction manager
+  mtx_ = &mtx;
 }
 
 RWType TransactionContext::GetRWType(const ItemPointer &location) {

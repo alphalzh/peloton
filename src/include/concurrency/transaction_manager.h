@@ -22,6 +22,7 @@
 #include "concurrency/transaction_context.h"
 #include "concurrency/epoch_manager_factory.h"
 #include "common/logger.h"
+#include "boost/thread/shared_mutex.hpp"
 
 namespace peloton {
 
@@ -158,6 +159,10 @@ class TransactionManager {
   static ProtocolType protocol_;
   static IsolationLevelType isolation_level_;
   static ConflictAvoidanceType conflict_avoidance_;
+  //===--------------------------------------------------------------------===//
+  // Mutex for support add index
+  //===--------------------------------------------------------------------===//
+  boost::upgrade_mutex mtx_;
 
 };
 }  // namespace storage

@@ -100,7 +100,7 @@ TEST_F(DropSQLTests, DropIndexTest) {
       "CREATE TABLE test(a INT PRIMARY KEY, b INT);");
 
   // Create a Index
-  TestingSQLUtil::ExecuteSQLQuery("CREATE INDEX idx ON test(a);");
+  TestingSQLUtil::ExecuteSQLQuery("CREATE INDEX CONCURRENTLY idx ON test(a);");
 
   // Check if the index is in catalog
   std::shared_ptr<catalog::IndexCatalogObject> index;
