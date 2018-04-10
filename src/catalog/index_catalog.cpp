@@ -175,11 +175,18 @@ bool IndexCatalog::InsertIndex(oid_t index_oid, const std::string &index_name,
   return InsertTuple(std::move(tuple), txn);
 }
 
+/** @brief   Delete Index on table by index oid
+ *  @param   index_oid      the oid of the index to be dropped
+ *  @param   txn            current transaction context
+ *  @return  bool           true if success, false if failed
+ */
 bool IndexCatalog::DeleteIndex(oid_t index_oid, concurrency::TransactionContext *txn) {
-  oid_t index_offset = IndexId::PRIMARY_KEY;  // Index of index_oid
+  // Find value corresponding to the index oid
+  oid_t index_offset = IndexId::PRIMARY_KEY;
   std::vector<type::Value> values;
   values.push_back(type::ValueFactory::GetIntegerValue(index_oid).Copy());
 
+  // If index in catalog cache, evict it.
   auto index_object = txn->catalog_cache.GetCachedIndexObject(index_oid);
   if (index_object) {
     auto table_object =
@@ -187,6 +194,7 @@ bool IndexCatalog::DeleteIndex(oid_t index_oid, concurrency::TransactionContext 
     table_object->EvictAllIndexObjects();
   }
 
+  // Delete the index in pg_index
   return DeleteWithIndexScan(index_offset, values, txn);
 }
 

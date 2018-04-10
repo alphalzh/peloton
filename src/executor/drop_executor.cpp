@@ -178,16 +178,28 @@ bool DropExecutor::DropTrigger(const planner::DropPlan &node,
   return false;
 }
 
+/**
+ * @brief   Drop an index.
+ * @details Drop an index. Will delete the corresponding entry from catalog, and
+ * the data structure of index itself will be garbage collected. Note that phantom
+ * could happen while dropping the index.
+ * @param   node    current planner node
+ * @param   txn     current transaction
+ * @return  bool    always false
+ */
 bool DropExecutor::DropIndex(const planner::DropPlan &node,
                              concurrency::TransactionContext *txn) {
+  // Get the name of index and the index in catalog.
   std::string index_name = node.GetIndexName();
   auto index_object =
       catalog::IndexCatalog::GetInstance()->GetIndexObject(index_name, txn);
 
+  // Drop index in catalog.
   ResultType result = catalog::Catalog::GetInstance()->DropIndex(
       index_object->GetIndexOid(), txn);
   txn->SetResult(result);
 
+  // Invalidate statement cache if drop successful.
   if (txn->GetResult() == ResultType::SUCCESS) {
     if (StatementCacheManager::GetStmtCacheManager().get()) {
       oid_t table_id = index_object->GetTableOid();

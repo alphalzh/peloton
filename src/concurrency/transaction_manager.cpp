@@ -40,7 +40,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::SNAPSHOT_READ);
     txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
-    //txn->LockShared();
+    txn->LockShared();
 
   } else if (type == IsolationLevelType::SNAPSHOT) {
     // transaction processing with decentralized epoch manager
@@ -53,10 +53,10 @@ TransactionContext *TransactionManager::BeginTransaction(
           thread_id, TimestampType::COMMIT);
 
       txn = new TransactionContext(thread_id, type, read_id, commit_id, &rw_lock_);
-      //txn->LockShared();
+      txn->LockShared();
     } else {
       txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
-      //txn->LockShared();
+      txn->LockShared();
     }
 
   } else {
@@ -68,7 +68,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::READ);
     txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
-    //txn->LockShared();
+    txn->LockShared();
   }
 
   if (static_cast<StatsType>(settings::SettingsManager::GetInt(
@@ -89,7 +89,7 @@ void TransactionManager::EndTransaction(TransactionContext *current_txn) {
     current_txn->ExecOnCommitTriggers();
   }
 
-  //current_txn->UnlockShared();
+  current_txn->UnlockShared();
   if(gc::GCManagerFactory::GetGCType() == GarbageCollectionType::ON) {
     gc::GCManagerFactory::GetInstance().RecycleTransaction(current_txn);
   } else {

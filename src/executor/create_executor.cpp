@@ -201,8 +201,21 @@ bool CreateExecutor::CreateTable(const planner::CreatePlan &node) {
   return (true);
 }
 
+/**
+ * @brief   Create an index.
+ * @details Create an index. Will block other transactions while creating
+ * the index. TODO: implement support for "create index concurrently"
+ * @param   node    current planner node
+ * @return  bool    always true
+ */
 bool CreateExecutor::CreateIndex(const planner::CreatePlan &node) {
+  // Get transaction
   auto txn = context_->GetTransaction();
+
+  // Lock out other transactions
+  txn->LockToExclusive();
+
+  // Get metadata about the index
   auto database_name = node.GetDatabaseName();
   std::string table_name = node.GetTableName();
   std::string index_name = node.GetIndexName();
@@ -211,9 +224,13 @@ bool CreateExecutor::CreateIndex(const planner::CreatePlan &node) {
 
   auto key_attrs = node.GetKeyAttrs();
 
+  // Create index in the catalog
   ResultType result = catalog::Catalog::GetInstance()->CreateIndex(
       database_name, table_name, key_attrs, index_name, unique_flag,
       index_type, txn);
+
+  // Unlock other transactions
+  txn->LockToShared();
   txn->SetResult(result);
 
   if (txn->GetResult() == ResultType::SUCCESS) {

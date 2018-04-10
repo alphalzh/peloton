@@ -159,7 +159,7 @@ class TransactionContext : public Printable {
     return isolation_level_;
   }
 
-  /*
+
   // Lock the mutex in a shared state
   void LockShared() {rw_lock_->ReadLock();}
 
@@ -179,7 +179,7 @@ class TransactionContext : public Printable {
     rw_lock_->Unlock();
     rw_lock_->ReadLock();
   }
-  */
+
 
   // cache for table catalog objects
   catalog::CatalogCache catalog_cache;

@@ -353,7 +353,7 @@ ResultType Catalog::CreatePrimaryIndex(oid_t database_oid, oid_t table_oid,
   return ResultType::SUCCESS;
 }
 
-/*@brief   create index on table
+/**@brief   create index on table
  * @param   database_name    the database which the indexed table belongs to
  * @param   table_name       name of the table to add index on
  * @param   index_attr       collection of the indexed attribute(column) name
@@ -441,7 +441,7 @@ ResultType Catalog::CreateIndex(
       index_name, index_oid, table_oid, database_oid, index_type,
       index_constraint, schema, key_schema, key_attrs, unique_keys);
 
-  // Add index to table
+  // Build index and add index to table.
   std::shared_ptr<index::Index> key_index(
       index::IndexFactory::GetIndex(index_metadata));
   table->AddIndex(key_index);
@@ -571,10 +571,10 @@ ResultType Catalog::DropTable(oid_t database_oid, oid_t table_oid,
   return ResultType::SUCCESS;
 }
 
-/*@brief   Drop Index on table
- * @param   index_oid      the oid of the index to be dropped
- * @param   txn            TransactionContext
- * @return  TransactionContext ResultType(SUCCESS or FAILURE)
+/** @brief   Drop Index on table
+ *  @param   index_oid      the oid of the index to be dropped
+ *  @param   txn            TransactionContext
+ *  @return  TransactionContext ResultType(SUCCESS or FAILURE)
  */
 ResultType Catalog::DropIndex(oid_t index_oid,
                               concurrency::TransactionContext *txn) {
@@ -590,9 +590,8 @@ ResultType Catalog::DropIndex(oid_t index_oid,
                            " to drop");
   }
   // the tricky thing about drop index is that you only know index oid or
-  // index
-  // table_oid and you must obtain database_object-->table_object in reverse
-  // way
+  // index table_oid and you must obtain database_object-->table_object in
+  // reverse way.
   // invalidate index cache object in table_catalog
   auto table_object = TableCatalog::GetInstance()->GetTableObject(
       index_object->GetTableOid(), txn);
@@ -604,7 +603,7 @@ ResultType Catalog::DropIndex(oid_t index_oid,
   LOG_TRACE("Successfully drop index %d for table %s", index_oid,
             table->GetName().c_str());
 
-  // register index object in rw_object_set
+  // register index object in rw_object_set for garbage collection.
   table->GetIndexWithOid(index_oid);
   txn->RecordDrop(table_object->GetDatabaseOid(), table_object->GetTableOid(),
                   index_oid);
@@ -612,17 +611,24 @@ ResultType Catalog::DropIndex(oid_t index_oid,
   return ResultType::SUCCESS;
 }
 
+/** @brief   Drop Index on table by index name
+ *  @param   index_name     the name of the index to be dropped
+ *  @param   txn            TransactionContext
+ *  @return  TransactionContext ResultType(SUCCESS or FAILURE)
+ */
 ResultType Catalog::DropIndex(const std::string &index_name,
                               concurrency::TransactionContext *txn) {
     if(txn == nullptr) {
         throw CatalogException("Do not have transaction to drop index " +
                                index_name);
     }
+    // Get index object in catalog by name.
     auto index_object = catalog::IndexCatalog::GetInstance()->GetIndexObject(
                 index_name, txn);
     if(index_object == nullptr) {
         throw CatalogException("Index name " + index_name + " cannot be found");
     }
+    // Drop the index
     ResultType result = DropIndex(index_object->GetIndexOid(), txn);
 
     return result;
