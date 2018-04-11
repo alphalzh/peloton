@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="1" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:29" time="0.041" name="AllTests">
-  <testsuite name="LogBufferTests" tests="1" failures="0" disabled="0" errors="0" time="0.041">
-    <testcase name="LogBufferTest" status="run" time="0.04" classname="LogBufferTests" />
-  </testsuite>
-</testsuites>

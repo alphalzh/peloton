@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc ../lib/libpeloton-capnp-d.a  CMakeFiles/peloton-capnp.dir/__/include/peloton/capnp/peloton_service.capnp.c++.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib ../lib/libpeloton-capnp-d.a

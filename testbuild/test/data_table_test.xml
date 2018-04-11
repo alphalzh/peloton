@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="2" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:36:22" time="0.418" name="AllTests">
-  <testsuite name="DataTableTests" tests="2" failures="0" disabled="0" errors="0" time="0.417">
-    <testcase name="TransformTileGroupTest" status="run" time="0.249" classname="DataTableTests" />
-    <testcase name="GlobalTableTest" status="run" time="0.167" classname="DataTableTests" />
-  </testsuite>
-</testsuites>

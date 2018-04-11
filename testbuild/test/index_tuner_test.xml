@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="1" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:34:11" time="8.248" name="AllTests">
-  <testsuite name="IndexTunerTests" tests="1" failures="0" disabled="0" errors="0" time="8.247">
-    <testcase name="BasicTest" status="run" time="8.246" classname="IndexTunerTests" />
-  </testsuite>
-</testsuites>

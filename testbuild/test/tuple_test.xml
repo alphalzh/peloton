@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="2" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:36:26" time="0.007" name="AllTests">
-  <testsuite name="TupleTests" tests="2" failures="0" disabled="0" errors="0" time="0.006">
-    <testcase name="BasicTest" status="run" time="0.004" classname="TupleTests" />
-    <testcase name="VarcharTest" status="run" time="0.002" classname="TupleTests" />
-  </testsuite>
-</testsuites>

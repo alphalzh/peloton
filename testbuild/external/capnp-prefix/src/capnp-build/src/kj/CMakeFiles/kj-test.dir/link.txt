@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libkj-test.a  CMakeFiles/kj-test.dir/test.c++.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libkj-test.a

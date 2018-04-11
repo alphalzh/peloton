@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="4" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:05" time="0.795" name="AllTests">
-  <testsuite name="HashSetOptTests" tests="4" failures="0" disabled="0" errors="0" time="0.795">
-    <testcase name="ExceptTest" status="run" time="0.178" classname="HashSetOptTests" />
-    <testcase name="ExceptAllTest" status="run" time="0.244" classname="HashSetOptTests" />
-    <testcase name="IntersectTest" status="run" time="0.129" classname="HashSetOptTests" />
-    <testcase name="IntersectAllTest" status="run" time="0.244" classname="HashSetOptTests" />
-  </testsuite>
-</testsuites>

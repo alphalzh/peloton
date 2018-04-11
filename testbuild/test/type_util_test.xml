@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="4" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:36:31" time="0.009" name="AllTests">
-  <testsuite name="TypeUtilTests" tests="4" failures="0" disabled="0" errors="0" time="0.008">
-    <testcase name="CompareEqualsRawTest" status="run" time="0.004" classname="TypeUtilTests" />
-    <testcase name="CompareLessThanRawTest" status="run" time="0" classname="TypeUtilTests" />
-    <testcase name="CompareGreaterThanRawTest" status="run" time="0.001" classname="TypeUtilTests" />
-    <testcase name="CompareStringsTest" status="run" time="0.002" classname="TypeUtilTests" />
-  </testsuite>
-</testsuites>

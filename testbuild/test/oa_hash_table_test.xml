@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites tests="4" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:34:39" time="3.338" name="AllTests">
-  <testsuite name="OAHashTableTest" tests="4" failures="0" disabled="0" errors="0" time="3.337">
-    <testcase name="CanInsertKeyValuePairs" status="run" time="0.057" classname="OAHashTableTest" />
-    <testcase name="CanIterate" status="run" time="0.068" classname="OAHashTableTest" />
-    <testcase name="CanCodegenProbeOrInsert" status="run" time="0" classname="OAHashTableTest" />
-    <testcase name="MicroBenchmark" status="run" time="3.212" classname="OAHashTableTest" />
-  </testsuite>
-</testsuites>
