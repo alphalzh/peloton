@@ -24,6 +24,7 @@
 #include "storage/tile.h"
 #include "storage/storage_manager.h"
 #include "catalog/foreign_key.h"
+#include "concurrency/lock_manager.h"
 
 namespace peloton {
 namespace executor {
@@ -164,6 +165,14 @@ bool UpdateExecutor::DExecute() {
 
   auto current_txn = executor_context_->GetTransaction();
 
+  oid_t table_oid = target_table_->GetOid();
+  // Lock the table (reader lock)
+  bool lock_success = current_txn->lock_manager_->LockShared(table_oid);
+  if (!lock_success){
+    LOG_TRACE("Cannot obtain lock for the table, abort!");
+    return false;
+  }
+
   auto executor_pool = executor_context_->GetPool();
   auto target_table_schema = target_table_->GetSchema();
   auto column_count = target_table_schema->GetColumnCount();
@@ -210,6 +219,12 @@ bool UpdateExecutor::DExecute() {
       if (visibility != VisibilityType::OK) {
         transaction_manager.SetTransactionResult(current_txn,
                                                  ResultType::FAILURE);
+        // Unlock the table
+        bool unlock_success = current_txn->lock_manager_->UnlockRW(table_oid);
+        if (!unlock_success){
+          LOG_TRACE("Cannot unlock the table, abort!");
+          return false;
+        }
         return false;
       }
     }
@@ -247,6 +262,12 @@ bool UpdateExecutor::DExecute() {
         }
         // When fail, ownership release is done inside PerformUpdatePrimaryKey
         else {
+          // Unlock the table
+          bool unlock_success = current_txn->lock_manager_->UnlockRW(table_oid);
+          if (!unlock_success){
+            LOG_TRACE("Cannot unlock the table, abort!");
+            return false;
+          }
           return false;
         }
       }
@@ -285,6 +306,12 @@ bool UpdateExecutor::DExecute() {
           LOG_TRACE("Fail to insert new tuple. Set txn failure.");
           transaction_manager.SetTransactionResult(current_txn,
                                                    ResultType::FAILURE);
+          // Unlock the table
+          bool unlock_success = current_txn->lock_manager_->UnlockRW(table_oid);
+          if (!unlock_success){
+            LOG_TRACE("Cannot unlock the table, abort!");
+            return false;
+          }
           return false;
         }
 
@@ -298,6 +325,12 @@ bool UpdateExecutor::DExecute() {
           }
           // When fail, ownership release is done inside PerformUpdatePrimaryKey
           else {
+            // Unlock the table
+            bool unlock_success = current_txn->lock_manager_->UnlockRW(table_oid);
+            if (!unlock_success){
+              LOG_TRACE("Cannot unlock the table, abort!");
+              return false;
+            }
             return false;
           }
         }
@@ -350,6 +383,12 @@ bool UpdateExecutor::DExecute() {
             }
             transaction_manager.SetTransactionResult(current_txn,
                                                      ResultType::FAILURE);
+            // Unlock the table
+            bool unlock_success = current_txn->lock_manager_->UnlockRW(table_oid);
+            if (!unlock_success){
+              LOG_TRACE("Cannot unlock the table, abort!");
+              return false;
+            }
             return false;
           }
 
@@ -410,6 +449,12 @@ bool UpdateExecutor::DExecute() {
         LOG_TRACE("Fail to update tuple. Set txn failure.");
         transaction_manager.SetTransactionResult(current_txn,
                                                  ResultType::FAILURE);
+        // Unlock the table
+        bool unlock_success = current_txn->lock_manager_->UnlockRW(table_oid);
+        if (!unlock_success){
+          LOG_TRACE("Cannot unlock the table, abort!");
+          return false;
+        }
         return false;
       }
     }
@@ -430,6 +475,12 @@ bool UpdateExecutor::DExecute() {
       trigger_list->ExecTriggers(TriggerType::ON_COMMIT_UPDATE_STATEMENT,
                                  current_txn);
     }
+  }
+  // Unlock the table
+  bool unlock_success = current_txn->lock_manager_->UnlockRW(table_oid);
+  if (!unlock_success){
+    LOG_TRACE("Cannot unlock the table, abort!");
+    return false;
   }
   return true;
 }

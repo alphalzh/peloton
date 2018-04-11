@@ -22,7 +22,6 @@
 #include "concurrency/transaction_context.h"
 #include "concurrency/epoch_manager_factory.h"
 #include "common/logger.h"
-#include "common/synchronization/readwrite_latch.h"
 
 namespace peloton {
 
@@ -155,14 +154,11 @@ class TransactionManager {
     return isolation_level_;
   }
 
+
  protected:
   static ProtocolType protocol_;
   static IsolationLevelType isolation_level_;
   static ConflictAvoidanceType conflict_avoidance_;
-  //===--------------------------------------------------------------------===//
-  // Mutex for support add index
-  //===--------------------------------------------------------------------===//
-  common::synchronization::ReadWriteLatch rw_lock_;
 
 };
 }  // namespace storage

@@ -20,6 +20,7 @@
 #include "common/logger.h"
 #include "common/statement_cache_manager.h"
 #include "executor/executor_context.h"
+#include "concurrency/lock_manager.h"
 
 namespace peloton {
 namespace executor {
@@ -116,6 +117,10 @@ bool DropExecutor::DropTable(const planner::DropPlan &node,
   auto database_name = node.GetDatabaseName();
   auto table_name = node.GetTableName();
 
+  oid_t table_id = catalog::Catalog::GetInstance()
+      ->GetTableObject(database_name, table_name, txn)
+      ->GetTableOid();
+
   if (node.IsMissing()) {
     try {
       auto table_object = catalog::Catalog::GetInstance()->GetTableObject(
@@ -132,17 +137,17 @@ bool DropExecutor::DropTable(const planner::DropPlan &node,
 
   if (txn->GetResult() == ResultType::SUCCESS) {
     LOG_TRACE("Dropping table succeeded!");
-
     if (StatementCacheManager::GetStmtCacheManager().get()) {
-      oid_t table_id = catalog::Catalog::GetInstance()
-                           ->GetTableObject(database_name, table_name, txn)
-                           ->GetTableOid();
       StatementCacheManager::GetStmtCacheManager()->InvalidateTableOid(
           table_id);
     }
   } else {
     LOG_TRACE("Result is: %s", ResultTypeToString(txn->GetResult()).c_str());
   }
+
+  // Remove table lock
+  concurrency::LockManager* lm = concurrency::LockManager::GetInstance();
+  lm->RemoveLock(table_id);
   return false;
 }
 

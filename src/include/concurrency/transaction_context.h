@@ -23,7 +23,6 @@
 #include "common/item_pointer.h"
 #include "common/printable.h"
 #include "common/internal_types.h"
-#include "common/synchronization/readwrite_latch.h"
 
 namespace peloton {
 
@@ -43,21 +42,21 @@ class TransactionContext : public Printable {
 
  public:
   TransactionContext(const size_t thread_id, const IsolationLevelType isolation,
-              const cid_t &read_id, common::synchronization::ReadWriteLatch *rw_lock);
+              const cid_t &read_id);
 
   TransactionContext(const size_t thread_id, const IsolationLevelType isolation,
-              const cid_t &read_id, const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock);
+              const cid_t &read_id, const cid_t &commit_id);
 
   ~TransactionContext();
 
  private:
   void Init(const size_t thread_id, const IsolationLevelType isolation,
-            const cid_t &read_id, common::synchronization::ReadWriteLatch *rw_lock) {
-    Init(thread_id, isolation, read_id, read_id, rw_lock);
+            const cid_t &read_id) {
+    Init(thread_id, isolation, read_id, read_id);
   }
 
   void Init(const size_t thread_id, const IsolationLevelType isolation,
-            const cid_t &read_id, const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock);
+            const cid_t &read_id, const cid_t &commit_id);
 
  public:
   //===--------------------------------------------------------------------===//
@@ -159,28 +158,6 @@ class TransactionContext : public Printable {
     return isolation_level_;
   }
 
-
-  // Lock the mutex in a shared state
-  void LockShared() {rw_lock_->ReadLock();}
-
-  // Unlock the mutex from shared state
-  void UnlockShared() {rw_lock_->Unlock();}
-
-  // Trys atomically unlock the mutex from shared state and transfer to
-  // exclusive state.
-  void LockToExclusive(){
-    rw_lock_->Unlock();
-    rw_lock_->WriteLock();
-  }
-
-  // Atomically unlock the mutex from exclusive state and transfer to
-  // shared state.
-  void LockToShared(){
-    rw_lock_->Unlock();
-    rw_lock_->ReadLock();
-  }
-
-
   // cache for table catalog objects
   catalog::CatalogCache catalog_cache;
 
@@ -232,10 +209,6 @@ class TransactionContext : public Printable {
 
   std::unique_ptr<trigger::TriggerSet> on_commit_triggers_;
 
-  //===--------------------------------------------------------------------===//
-  // Mutex for support add index, pointer to mutex in transaction_manager
-  //===--------------------------------------------------------------------===//
-  common::synchronization::ReadWriteLatch *rw_lock_;
 };
 
 }  // namespace concurrency

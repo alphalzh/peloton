@@ -20,7 +20,6 @@
 #include "settings/settings_manager.h"
 #include "statistics/stats_aggregator.h"
 #include "storage/tile_group.h"
-#include "common/synchronization/readwrite_latch.h"
 
 namespace peloton {
 namespace concurrency {
@@ -39,8 +38,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     // transaction processing with decentralized epoch manager
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::SNAPSHOT_READ);
-    txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
-    txn->LockShared();
+    txn = new TransactionContext(thread_id, type, read_id);
 
   } else if (type == IsolationLevelType::SNAPSHOT) {
     // transaction processing with decentralized epoch manager
@@ -52,11 +50,9 @@ TransactionContext *TransactionManager::BeginTransaction(
       cid_t commit_id = EpochManagerFactory::GetInstance().EnterEpoch(
           thread_id, TimestampType::COMMIT);
 
-      txn = new TransactionContext(thread_id, type, read_id, commit_id, &rw_lock_);
-      txn->LockShared();
+      txn = new TransactionContext(thread_id, type, read_id, commit_id);
     } else {
-      txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
-      txn->LockShared();
+      txn = new TransactionContext(thread_id, type, read_id);
     }
 
   } else {
@@ -67,8 +63,7 @@ TransactionContext *TransactionManager::BeginTransaction(
     // transaction processing with decentralized epoch manager
     cid_t read_id = EpochManagerFactory::GetInstance().EnterEpoch(
         thread_id, TimestampType::READ);
-    txn = new TransactionContext(thread_id, type, read_id, &rw_lock_);
-    txn->LockShared();
+    txn = new TransactionContext(thread_id, type, read_id);
   }
 
   if (static_cast<StatsType>(settings::SettingsManager::GetInt(
@@ -89,7 +84,6 @@ void TransactionManager::EndTransaction(TransactionContext *current_txn) {
     current_txn->ExecOnCommitTriggers();
   }
 
-  current_txn->UnlockShared();
   if(gc::GCManagerFactory::GetGCType() == GarbageCollectionType::ON) {
     gc::GCManagerFactory::GetInstance().RecycleTransaction(current_txn);
   } else {

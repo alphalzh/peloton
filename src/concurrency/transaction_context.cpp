@@ -51,21 +51,21 @@ namespace concurrency {
 
 TransactionContext::TransactionContext(const size_t thread_id,
                          const IsolationLevelType isolation,
-                         const cid_t &read_id, common::synchronization::ReadWriteLatch *rw_lock) {
-  Init(thread_id, isolation, read_id, rw_lock);
+                         const cid_t &read_id) {
+  Init(thread_id, isolation, read_id);
 }
 
 TransactionContext::TransactionContext(const size_t thread_id,
                          const IsolationLevelType isolation,
-                         const cid_t &read_id, const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock) {
-  Init(thread_id, isolation, read_id, commit_id, rw_lock);
+                         const cid_t &read_id, const cid_t &commit_id) {
+  Init(thread_id, isolation, read_id, commit_id);
 }
 
 TransactionContext::~TransactionContext() {}
 
 void TransactionContext::Init(const size_t thread_id,
                        const IsolationLevelType isolation, const cid_t &read_id,
-                       const cid_t &commit_id, common::synchronization::ReadWriteLatch *rw_lock) {
+                       const cid_t &commit_id) {
   read_id_ = read_id;
 
   // commit id can be set at a transaction's commit phase.
@@ -89,8 +89,6 @@ void TransactionContext::Init(const size_t thread_id,
 
   on_commit_triggers_.reset();
 
-  // Set the pointer to r/w mutex in transaction manager
-  rw_lock_ = rw_lock;
 }
 
 RWType TransactionContext::GetRWType(const ItemPointer &location) {
