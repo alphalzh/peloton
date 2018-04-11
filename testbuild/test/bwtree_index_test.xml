@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="10" failures="2" disabled="0" errors="0" timestamp="2018-04-10T21:35:22" time="0.19" name="AllTests">
+  <testsuite name="BwTreeIndexTests" tests="10" failures="2" disabled="0" errors="0" time="0.189">
+    <testcase name="BasicTest" status="run" time="0.013" classname="BwTreeIndexTests" />
+    <testcase name="MultiMapInsertTest" status="run" time="0.008" classname="BwTreeIndexTests" />
+    <testcase name="UniqueKeyInsertTest" status="run" time="0.012" classname="BwTreeIndexTests" />
+    <testcase name="UniqueKeyDeleteTest" status="run" time="0.008" classname="BwTreeIndexTests">
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:181&#x0A;Value of: location_ptrs.size()&#x0A;  Actual: 2&#x0A;Expected: 0" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:181
+Value of: location_ptrs.size()
+  Actual: 2
+Expected: 0]]></failure>
+    </testcase>
+    <testcase name="NonUniqueKeyDeleteTest" status="run" time="0.008" classname="BwTreeIndexTests" />
+    <testcase name="MultiThreadedInsertTest" status="run" time="0.012" classname="BwTreeIndexTests" />
+    <testcase name="UniqueKeyMultiThreadedTest" status="run" time="0.027" classname="BwTreeIndexTests">
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:320&#x0A;Value of: location_ptrs.size()&#x0A;  Actual: 2&#x0A;Expected: 0" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:320
+Value of: location_ptrs.size()
+  Actual: 2
+Expected: 0]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:329&#x0A;Value of: location_ptrs.size()&#x0A;  Actual: 3&#x0A;Expected: 1" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:329
+Value of: location_ptrs.size()
+  Actual: 3
+Expected: 1]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:339&#x0A;Value of: location_ptrs.size()&#x0A;  Actual: 3&#x0A;Expected: 1" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:339
+Value of: location_ptrs.size()
+  Actual: 3
+Expected: 1]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:346&#x0A;Value of: location_ptrs.size()&#x0A;  Actual: 2&#x0A;Expected: 0" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:346
+Value of: location_ptrs.size()
+  Actual: 2
+Expected: 0]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:357&#x0A;Value of: location_ptrs.size()&#x0A;  Actual: 3&#x0A;Expected: 1" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:357
+Value of: location_ptrs.size()
+  Actual: 3
+Expected: 1]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:368&#x0A;Value of: location_ptrs.size()&#x0A;  Actual: 3&#x0A;Expected: 1" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/index/testing_index_util.cpp:368
+Value of: location_ptrs.size()
+  Actual: 3
+Expected: 1]]></failure>
+    </testcase>
+    <testcase name="NonUniqueKeyMultiThreadedTest" status="run" time="0.026" classname="BwTreeIndexTests" />
+    <testcase name="NonUniqueKeyMultiThreadedStressTest" status="run" time="0.026" classname="BwTreeIndexTests" />
+    <testcase name="NonUniqueKeyMultiThreadedStressTest2" status="run" time="0.048" classname="BwTreeIndexTests" />
+  </testsuite>
+</testsuites>

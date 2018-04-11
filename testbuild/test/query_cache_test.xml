@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="7" failures="7" disabled="0" errors="0" timestamp="2018-04-10T21:34:44" time="0.202" name="AllTests">
+  <testsuite name="QueryCacheTest" tests="7" failures="7" disabled="0" errors="0" time="0.201">
+    <testcase name="SimpleCache" status="run" time="0.195" classname="QueryCacheTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="CacheSeqScanPlan" status="run" time="0" classname="QueryCacheTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="CacheHashJoinPlan" status="run" time="0.001" classname="QueryCacheTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="CacheOrderByPlan" status="run" time="0.001" classname="QueryCacheTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="CacheAggregatePlan" status="run" time="0.001" classname="QueryCacheTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="CacheNestedLoopJoinPlan" status="run" time="0.001" classname="QueryCacheTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="PerformanceBenchmark" status="run" time="0.001" classname="QueryCacheTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="2" failures="2" disabled="0" errors="0" timestamp="2018-04-10T21:36:15" time="0.542" name="AllTests">
+  <testsuite name="TimestampFunctionsSQLTest" tests="2" failures="2" disabled="0" errors="0" time="0.538">
+    <testcase name="DateTruncTest" status="run" time="0.531" classname="TimestampFunctionsSQLTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DatePartTest" status="run" time="0.007" classname="TimestampFunctionsSQLTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

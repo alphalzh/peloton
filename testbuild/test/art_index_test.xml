@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="5" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:21" time="0.55" name="AllTests">
+  <testsuite name="ArtIndexTests" tests="5" failures="0" disabled="0" errors="0" time="0.549">
+    <testcase name="BasicTest" status="run" time="0.133" classname="ArtIndexTests" />
+    <testcase name="NonUniqueKeyInsertTest" status="run" time="0.102" classname="ArtIndexTests" />
+    <testcase name="NonUniqueKeyDeleteTest" status="run" time="0.113" classname="ArtIndexTests" />
+    <testcase name="NonUniqueKeyMultiThreadedInsertTest" status="run" time="0.094" classname="ArtIndexTests" />
+    <testcase name="NonUniqueKeyMultiThreadedStressTest" status="run" time="0.106" classname="ArtIndexTests" />
+  </testsuite>
+</testsuites>

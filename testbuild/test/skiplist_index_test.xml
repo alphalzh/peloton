@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="10" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:28" time="0.201" name="AllTests">
+  <testsuite name="SkipListIndexTests" tests="10" failures="0" disabled="0" errors="0" time="0.2">
+    <testcase name="BasicTest" status="run" time="0.009" classname="SkipListIndexTests" />
+    <testcase name="MultiMapInsertTest" status="run" time="0.004" classname="SkipListIndexTests" />
+    <testcase name="UniqueKeyInsertTest" status="run" time="0.002" classname="SkipListIndexTests" />
+    <testcase name="UniqueKeyDeleteTest" status="run" time="0.005" classname="SkipListIndexTests" />
+    <testcase name="NonUniqueKeyDeleteTest" status="run" time="0.003" classname="SkipListIndexTests" />
+    <testcase name="MultiThreadedInsertTest" status="run" time="0.007" classname="SkipListIndexTests" />
+    <testcase name="UniqueKeyMultiThreadedTest" status="run" time="0.015" classname="SkipListIndexTests" />
+    <testcase name="NonUniqueKeyMultiThreadedTest" status="run" time="0.018" classname="SkipListIndexTests" />
+    <testcase name="NonUniqueKeyMultiThreadedStressTest" status="run" time="0.03" classname="SkipListIndexTests" />
+    <testcase name="NonUniqueKeyMultiThreadedStressTest2" status="run" time="0.107" classname="SkipListIndexTests" />
+  </testsuite>
+</testsuites>

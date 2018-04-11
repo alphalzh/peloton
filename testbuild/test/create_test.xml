@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="6" failures="6" disabled="0" errors="0" timestamp="2018-04-10T21:35:03" time="0.211" name="AllTests">
+  <testsuite name="CreateTests" tests="6" failures="6" disabled="0" errors="0" time="0.21">
+    <testcase name="CreatingDB" status="run" time="0.201" classname="CreateTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PelotonDB is not found&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Database PelotonDB is not found" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="CreatingTable" status="run" time="0.001" classname="CreateTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="CreatingUDFs" status="run" time="0.003" classname="CreateTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="CreatingTrigger" status="run" time="0.002" classname="CreateTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="CreatingTriggerWithoutWhen" status="run" time="0.001" classname="CreateTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="CreatingTriggerInCatalog" status="run" time="0.002" classname="CreateTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

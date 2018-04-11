@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" failures="3" disabled="0" errors="0" timestamp="2018-04-10T21:35:19" time="0.214" name="AllTests">
+  <testsuite name="FunctionsTests" tests="3" failures="3" disabled="0" errors="0" time="0.213">
+    <testcase name="CatalogTest" status="run" time="0.211" classname="FunctionsTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in SetUp()." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in SetUp().]]></failure>
+    </testcase>
+    <testcase name="FuncCallTest" status="run" time="0.001" classname="FunctionsTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in SetUp()." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in SetUp().]]></failure>
+    </testcase>
+    <testcase name="SubstrFuncCallTest" status="run" time="0" classname="FunctionsTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in SetUp()." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in SetUp().]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

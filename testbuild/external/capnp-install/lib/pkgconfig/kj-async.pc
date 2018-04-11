@@ -1,0 +1,11 @@
+prefix=/Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install
+exec_prefix=
+libdir=/Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib
+includedir=/Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include
+
+Name: KJ Async Framework Library
+Description: Basic utility library called KJ (async part)
+Version: 0.6.1
+Libs: -L${libdir} -lkj-async -pthread  
+Requires: kj = 0.6.1
+Cflags: -I${includedir} -pthread  

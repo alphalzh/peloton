@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++   -fPIC -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/capnp_tool.dir/compiler/module-loader.c++.o CMakeFiles/capnp_tool.dir/compiler/capnp.c++.o  -o capnp libcapnpc.a libcapnp.a ../kj/libkj.a -lpthread 

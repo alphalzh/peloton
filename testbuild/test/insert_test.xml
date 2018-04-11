@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="1" failures="1" disabled="0" errors="0" timestamp="2018-04-10T21:35:06" time="0.198" name="AllTests">
+  <testsuite name="InsertTests" tests="1" failures="1" disabled="0" errors="0" time="0.197">
+    <testcase name="InsertRecord" status="run" time="0.197" classname="InsertTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

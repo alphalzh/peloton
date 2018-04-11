@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="10" failures="10" disabled="0" errors="0" timestamp="2018-04-10T21:36:05" time="0.331" name="AllTests">
+  <testsuite name="DistinctAggregateSQLTests" tests="10" failures="10" disabled="0" errors="0" time="0.33">
+    <testcase name="DistinctAggregateCountTest" status="run" time="0.302" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateMaxTest" status="run" time="0.004" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateMinTest" status="run" time="0.003" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateAvgTest" status="run" time="0.003" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateSumTest" status="run" time="0.003" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateGroupByCountTest" status="run" time="0.002" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateGroupByMaxTest" status="run" time="0.004" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateGroupByMinTest" status="run" time="0.003" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateGroupByAvgTest" status="run" time="0.002" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="DistinctAggregateGroupBySumTest" status="run" time="0.003" classname="DistinctAggregateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="9" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:07" time="5.398" name="AllTests">
+  <testsuite name="JoinTests" tests="9" failures="0" disabled="0" errors="0" time="5.397">
+    <testcase name="BasicTest" status="run" time="0.265" classname="JoinTests" />
+    <testcase name="EmptyTablesTest" status="run" time="0.225" classname="JoinTests" />
+    <testcase name="JoinTypesTest" status="run" time="0.889" classname="JoinTests" />
+    <testcase name="ComplicatedTest" status="run" time="0.851" classname="JoinTests" />
+    <testcase name="LeftTableEmptyTest" status="run" time="0.821" classname="JoinTests" />
+    <testcase name="RightTableEmptyTest" status="run" time="0.824" classname="JoinTests" />
+    <testcase name="JoinPredicateTest" status="run" time="0.825" classname="JoinTests" />
+    <testcase name="SpeedTest" status="run" time="0.452" classname="JoinTests" />
+    <testcase name="BasicNestedLoopTest" status="run" time="0.245" classname="JoinTests" />
+  </testsuite>
+</testsuites>

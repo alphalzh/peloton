@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="31" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:57" time="0.038" name="AllTests">
+  <testsuite name="PostgresParserTests" tests="31" failures="0" disabled="0" errors="0" time="0.038">
+    <testcase name="BasicTest" status="run" time="0.006" classname="PostgresParserTests" />
+    <testcase name="AggTest" status="run" time="0.002" classname="PostgresParserTests" />
+    <testcase name="GroupByTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="OrderByTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="ConstTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="JoinTest" status="run" time="0.004" classname="PostgresParserTests" />
+    <testcase name="NestedQueryTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="MultiTableTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="ColumnUpdateTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="ExpressionUpdateTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="StringUpdateTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="DeleteTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="DeleteTestWithPredicate" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="InsertTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="CreateTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="TransactionTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="CreateIndexTest" status="run" time="0.003" classname="PostgresParserTests" />
+    <testcase name="InsertIntoSelectTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="CreateDbTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="CreateSchemaTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="CreateViewTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="DistinctFromTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="ConstraintTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="DataTypeTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="CreateTriggerTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="DropTriggerTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="FuncCallTest" status="run" time="0.001" classname="PostgresParserTests" />
+    <testcase name="UDFFuncCallTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="CaseTest" status="run" time="0" classname="PostgresParserTests" />
+    <testcase name="DateTypeTest" status="run" time="0.002" classname="PostgresParserTests" />
+    <testcase name="TypeCastTest" status="run" time="0.001" classname="PostgresParserTests" />
+  </testsuite>
+</testsuites>

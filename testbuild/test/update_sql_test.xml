@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" failures="3" disabled="0" errors="0" timestamp="2018-04-10T21:36:19" time="0.366" name="AllTests">
+  <testsuite name="UpdateSQLTests" tests="3" failures="3" disabled="0" errors="0" time="0.366">
+    <testcase name="SimpleUpdateSQLTest" status="run" time="0.353" classname="UpdateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="ComplexUpdateSQLTest" status="run" time="0.01" classname="UpdateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="UpdateSQLCastTest" status="run" time="0.002" classname="UpdateSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

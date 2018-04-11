@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="4" disabled="0" errors="0" timestamp="2018-04-10T21:35:55" time="0.587" name="AllTests">
+  <testsuite name="TupleSamplesStorageTests" tests="4" failures="4" disabled="0" errors="0" time="0.586">
+    <testcase name="SamplesDBTest" status="run" time="0.274" classname="TupleSamplesStorageTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database samples_db is not found&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Database samples_db is not found" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="AddSamplesTableTest" status="run" time="0.062" classname="TupleSamplesStorageTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database samples_db to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database samples_db to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="GetColumnSamplesTest" status="run" time="0.104" classname="TupleSamplesStorageTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database samples_db to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database samples_db to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="CollectSamplesForTableTest" status="run" time="0.146" classname="TupleSamplesStorageTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database samples_db to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database samples_db to create table" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="6" failures="4" disabled="0" errors="0" timestamp="2018-04-10T21:35:59" time="0.295" name="AllTests">
+  <testsuite name="PlannerTest" tests="6" failures="4" disabled="0" errors="0" time="0.294">
+    <testcase name="CreateDatabasePlanTest" status="run" time="0.005" classname="PlannerTest" />
+    <testcase name="DropDatabasePlanTest" status="run" time="0.001" classname="PlannerTest" />
+    <testcase name="DeletePlanTestParameter" status="run" time="0.285" classname="PlannerTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="UpdatePlanTestParameter" status="run" time="0.001" classname="PlannerTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="InsertPlanTestParameter" status="run" time="0.001" classname="PlannerTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="InsertPlanTestParameterColumns" status="run" time="0.001" classname="PlannerTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

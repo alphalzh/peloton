@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="4" disabled="0" errors="0" timestamp="2018-04-10T21:35:48" time="0.399" name="AllTests">
+  <testsuite name="OptimizerTests" tests="4" failures="4" disabled="0" errors="0" time="0.398">
+    <testcase name="HashJoinTest" status="run" time="0.37" classname="OptimizerTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database default_database is not found&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Database default_database is not found" thrown in the test body.]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+    <testcase name="PredicatePushDownTest" status="run" time="0.013" classname="OptimizerTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database default_database is not found&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Database default_database is not found" thrown in the test body.]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+    <testcase name="PushFilterThroughJoinTest" status="run" time="0.007" classname="OptimizerTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database default_database is not found&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Database default_database is not found" thrown in the test body.]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+    <testcase name="PredicatePushDownRewriteTest" status="run" time="0.007" classname="OptimizerTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database default_database is not found&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Database default_database is not found" thrown in the test body.]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="2" failures="1" disabled="0" errors="0" timestamp="2018-04-10T21:35:17" time="0.345" name="AllTests">
+  <testsuite name="UpdateTests" tests="2" failures="1" disabled="0" errors="0" time="0.344">
+    <testcase name="MultiColumnUpdates" status="run" time="0.133" classname="UpdateTests" />
+    <testcase name="UpdatingOld" status="run" time="0.211" classname="UpdateTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database default_database to create table&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database default_database to create table" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -1,0 +1,11 @@
+prefix=/Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install
+exec_prefix=
+libdir=/Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib
+includedir=/Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include
+
+Name: Cap'n Proto JSON
+Description: JSON encoder and decoder for Cap'n Proto objects
+Version: 0.6.1
+Libs: -L${libdir} -lcapnp-json
+Requires: capnp = 0.6.1 kj = 0.6.1
+Cflags: -I${includedir}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="4" disabled="0" errors="0" timestamp="2018-04-10T21:34:50" time="0.231" name="AllTests">
+  <testsuite name="ZoneMapScanTest" tests="4" failures="4" disabled="0" errors="0" time="0.23">
+    <testcase name="ScanNoPredicates" status="run" time="0.227" classname="ZoneMapScanTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="SimplePredicate" status="run" time="0.001" classname="ZoneMapScanTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="PredicateOnNonOutputColumn" status="run" time="0.001" classname="ZoneMapScanTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+    <testcase name="ScanwithConjunctionPredicate" status="run" time="0.001" classname="ZoneMapScanTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Database PELOTON_CODEGEN is not found&quot; thrown in the test fixture&apos;s constructor." type=""><![CDATA[unknown file
+C++ exception with description "Database PELOTON_CODEGEN is not found" thrown in the test fixture's constructor.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

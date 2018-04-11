@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:13" time="0.316" name="AllTests">
+  <testsuite name="LimitTests" tests="4" failures="0" disabled="0" errors="0" time="0.315">
+    <testcase name="NonLeafLimitOffsetTest" status="run" time="0.121" classname="LimitTests" />
+    <testcase name="NonLeafSkipAllTest" status="run" time="0.061" classname="LimitTests" />
+    <testcase name="NonLeafReturnAllTest" status="run" time="0.062" classname="LimitTests" />
+    <testcase name="NonLeafHugeLimitTest" status="run" time="0.071" classname="LimitTests" />
+  </testsuite>
+</testsuites>

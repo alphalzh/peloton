@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="1" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:36:34" time="24.7" name="AllTests">
+  <testsuite name="IndexPerformanceTests" tests="1" failures="0" disabled="0" errors="0" time="24.698">
+    <testcase name="BwTreeMultiThreadedTest" status="run" time="24.698" classname="IndexPerformanceTests" />
+  </testsuite>
+</testsuites>

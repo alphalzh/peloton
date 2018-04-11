@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:27" time="0.02" name="AllTests">
+  <testsuite name="IndexUtilTests" tests="3" failures="0" disabled="0" errors="0" time="0.019">
+    <testcase name="FindValueIndexTest" status="run" time="0.006" classname="IndexUtilTests" />
+    <testcase name="ConstructBoundaryKeyTest" status="run" time="0.007" classname="IndexUtilTests" />
+    <testcase name="BindKeyTest" status="run" time="0.005" classname="IndexUtilTests" />
+  </testsuite>
+</testsuites>

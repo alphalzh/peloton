@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="4" disabled="0" errors="0" timestamp="2018-04-10T21:34:10" time="0.248" name="AllTests">
+  <testsuite name="BinderCorrectnessTest" tests="4" failures="4" disabled="0" errors="0" time="0.245">
+    <testcase name="SelectStatementTest" status="run" time="0.239" classname="BinderCorrectnessTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in SetUp()." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in SetUp().]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+    <testcase name="DeleteStatementTest" status="run" time="0.003" classname="BinderCorrectnessTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in SetUp()." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in SetUp().]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+    <testcase name="BindDepthTest" status="run" time="0.001" classname="BinderCorrectnessTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in SetUp()." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in SetUp().]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+    <testcase name="FunctionExpressionTest" status="run" time="0.001" classname="BinderCorrectnessTest">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Can&apos;t find Database pg_catalog to create table&quot; thrown in SetUp()." type=""><![CDATA[unknown file
+C++ exception with description "Can't find Database pg_catalog to create table" thrown in SetUp().]]></failure>
+      <failure message="unknown file&#x0A;C++ exception with description &quot;Drop Database: default_database does not exist&quot; thrown in TearDown()." type=""><![CDATA[unknown file
+C++ exception with description "Drop Database: default_database does not exist" thrown in TearDown().]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

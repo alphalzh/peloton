@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="8" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:35:01" time="0.467" name="AllTests">
+  <testsuite name="AggregateTests" tests="8" failures="0" disabled="0" errors="0" time="0.467">
+    <testcase name="SortedDistinctTest" status="run" time="0.11" classname="AggregateTests" />
+    <testcase name="SortedSumGroupByTest" status="run" time="0.045" classname="AggregateTests" />
+    <testcase name="SortedSumMaxGroupByTest" status="run" time="0.044" classname="AggregateTests" />
+    <testcase name="MinMaxTest" status="run" time="0.05" classname="AggregateTests" />
+    <testcase name="HashDistinctTest" status="run" time="0.058" classname="AggregateTests" />
+    <testcase name="HashSumGroupByTest" status="run" time="0.05" classname="AggregateTests" />
+    <testcase name="HashCountDistinctGroupByTest" status="run" time="0.059" classname="AggregateTests" />
+    <testcase name="PlainSumCountDistinctTest" status="run" time="0.05" classname="AggregateTests" />
+  </testsuite>
+</testsuites>

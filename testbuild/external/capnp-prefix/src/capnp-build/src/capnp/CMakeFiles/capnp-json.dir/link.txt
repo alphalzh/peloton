@@ -1,0 +1,2 @@
+/Library/Developer/CommandLineTools/usr/bin/ar qc libcapnp-json.a  CMakeFiles/capnp-json.dir/compat/json.c++.o CMakeFiles/capnp-json.dir/compat/json.capnp.c++.o
+/Library/Developer/CommandLineTools/usr/bin/ranlib libcapnp-json.a

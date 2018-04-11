@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="39" failures="0" disabled="0" errors="0" timestamp="2018-04-10T21:34:51" time="0.025" name="AllTests">
+  <testsuite name="InternalTypesTests" tests="39" failures="0" disabled="0" errors="0" time="0.024">
+    <testcase name="DatePartTypeTest" status="run" time="0.005" classname="InternalTypesTests" />
+    <testcase name="BackendTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="TypeIdTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="StatementTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="ExpressionTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="IndexTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="IndexConstraintTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="HybridScanTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="JoinTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="PlanNodeTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="ParseNodeTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="ResultTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="ConstraintTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="LoggingTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="CheckpointingTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="GarbageCollectionTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="ProtocolTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="EpochTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="TimestampTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="VisibilityTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="VisibilityIdTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="IsolationLevelTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="ConflictAvoidanceTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="RWTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="CreateTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="DropTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="AggregateTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="QuantifierTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="TableReferenceTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="InsertTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="CopyTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="PayloadTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="TaskPriorityTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="SetOpTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="LogRecordTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="PropertyTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="EntityTypeTest" status="run" time="0" classname="InternalTypesTests" />
+    <testcase name="GCVersionTypeTest" status="run" time="0.001" classname="InternalTypesTests" />
+    <testcase name="PostgresValueTypeTest" status="run" time="0" classname="InternalTypesTests" />
+  </testsuite>
+</testsuites>

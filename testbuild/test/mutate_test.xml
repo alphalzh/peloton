@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="4" failures="4" disabled="0" errors="0" timestamp="2018-04-10T21:35:14" time="0.34" name="AllTests">
+  <testsuite name="MutateTests" tests="4" failures="4" disabled="0" errors="0" time="0.34">
+    <testcase name="StressTests" status="run" time="0.115" classname="MutateTests">
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:180&#x0A;Value of: delete_executor.Execute()&#x0A;  Actual: false&#x0A;Expected: true" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:180
+Value of: delete_executor.Execute()
+  Actual: false
+Expected: true]]></failure>
+    </testcase>
+    <testcase name="InsertTest" status="run" time="0.109" classname="MutateTests">
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:318&#x0A;Value of: executor.Execute()&#x0A;  Actual: false&#x0A;Expected: true" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:318
+Value of: executor.Execute()
+  Actual: false
+Expected: true]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:324&#x0A;Value of: 2&#x0A;Expected: dest_data_table-&gt;GetTileGroupCount()&#x0A;Which is: 1" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:324
+Value of: 2
+Expected: dest_data_table->GetTileGroupCount()
+Which is: 1]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:313&#x0A;Actual function call count doesn&apos;t match EXPECT_CALL(child_executor, GetOutput())...&#x0A;         Expected: to be called once&#x0A;           Actual: never called - unsatisfied and active" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:313
+Actual function call count doesn't match EXPECT_CALL(child_executor, GetOutput())...
+         Expected: to be called once
+           Actual: never called - unsatisfied and active]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:298&#x0A;Actual function call count doesn&apos;t match EXPECT_CALL(child_executor, DExecute())...&#x0A;         Expected: to be called twice&#x0A;           Actual: never called - unsatisfied and active" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:298
+Actual function call count doesn't match EXPECT_CALL(child_executor, DExecute())...
+         Expected: to be called twice
+           Actual: never called - unsatisfied and active]]></failure>
+    </testcase>
+    <testcase name="DeleteTest" status="run" time="0.057" classname="MutateTests">
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:180&#x0A;Value of: delete_executor.Execute()&#x0A;  Actual: false&#x0A;Expected: true" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:180
+Value of: delete_executor.Execute()
+  Actual: false
+Expected: true]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:352&#x0A;Value of: 6&#x0A;Expected: tuple_cnt&#x0A;Which is: 0" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:352
+Value of: 6
+Expected: tuple_cnt
+Which is: 0]]></failure>
+    </testcase>
+    <testcase name="UpdateTest" status="run" time="0.058" classname="MutateTests">
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:392&#x0A;Value of: 10&#x0A;Expected: tuple_cnt&#x0A;Which is: 0" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:392
+Value of: 10
+Expected: tuple_cnt
+Which is: 0]]></failure>
+      <failure message="/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:405&#x0A;Value of: 6&#x0A;Expected: tuple_cnt&#x0A;Which is: 0" type=""><![CDATA[/Users/Alpha/Documents/s18/15721/peloton/test/executor/mutate_test.cpp:405
+Value of: 6
+Expected: tuple_cnt
+Which is: 0]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>

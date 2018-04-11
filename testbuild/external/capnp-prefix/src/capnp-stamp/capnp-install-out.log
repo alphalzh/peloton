@@ -1,0 +1,108 @@
+[ 22%] Built target kj
+[ 25%] Built target kj-test
+[ 35%] Built target kj-async
+[ 55%] Built target capnp
+[ 57%] Built target kj-http
+[ 60%] Built target capnpc_cpp
+[ 63%] Built target capnpc_capnp
+[ 77%] Built target capnpc
+[ 81%] Built target capnp-json
+[ 96%] Built target capnp-rpc
+[100%] Built target capnp_tool
+Install the project...
+-- Install configuration: "Debug"
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/cmake/CapnProto/CapnProtoTargets.cmake
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/cmake/CapnProto/CapnProtoTargets-debug.cmake
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/cmake/CapnProto/CapnProtoMacros.cmake
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/cmake/CapnProto/CapnProtoConfig.cmake
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/cmake/CapnProto/CapnProtoConfigVersion.cmake
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/pkgconfig/kj.pc
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/pkgconfig/capnp.pc
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/pkgconfig/kj-async.pc
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/pkgconfig/capnp-rpc.pc
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/pkgconfig/capnp-json.pc
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libkj.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/common.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/units.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/memory.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/refcount.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/array.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/vector.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/string.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/string-tree.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/exception.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/debug.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/arena.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/miniposix.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/io.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/tuple.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/one-of.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/function.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/mutex.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/thread.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/threadlocal.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/main.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/windows-sanity.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/parse/common.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/parse/char.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/std/iostream.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libkj-test.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/test.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/compat/gtest.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libkj-async.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/async-prelude.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/async.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/async-inl.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/async-unix.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/async-win32.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/async-io.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/time.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libkj-http.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/kj/compat/http.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libcapnp.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/c++.capnp.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/common.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/blob.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/endian.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/layout.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/orphan.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/list.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/any.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/message.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/capability.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/membrane.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/dynamic.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/schema.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/schema.capnp.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/schema-lite.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/schema-loader.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/schema-parser.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/pretty-print.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/serialize.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/serialize-async.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/serialize-packed.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/serialize-text.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/pointer-helpers.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/generated-header-support.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/raw-schema.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/c++.capnp
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/schema.capnp
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libcapnp-rpc.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/rpc-prelude.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/rpc.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/rpc-twoparty.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/rpc.capnp.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/rpc-twoparty.capnp.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/persistent.capnp.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/ez-rpc.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/rpc.capnp
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/rpc-twoparty.capnp
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/persistent.capnp
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libcapnp-json.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/compat/json.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/compat/json.capnp.h
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/include/capnp/compat/json.capnp
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/lib/libcapnpc.a
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/bin/capnp
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/bin/capnpc-c++
+-- Installing: /Users/Alpha/Documents/s18/15721/peloton/testbuild/external/capnp-install/bin/capnpc-capnp

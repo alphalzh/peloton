@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="5" failures="5" disabled="0" errors="0" timestamp="2018-04-10T21:36:04" time="0.286" name="AllTests">
+  <testsuite name="CaseSQLTests" tests="5" failures="5" disabled="0" errors="0" time="0.285">
+    <testcase name="Simple" status="run" time="0.276" classname="CaseSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="SimpleWithArg" status="run" time="0.002" classname="CaseSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="SimpleWithArgStringResult" status="run" time="0.002" classname="CaseSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="SimpleMultipleWhen" status="run" time="0.002" classname="CaseSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+    <testcase name="SimpleMultipleWhenWithoutElse" status="run" time="0.002" classname="CaseSQLTests">
+      <failure message="unknown file&#x0A;C++ exception with description &quot;No string conversion for ResultType value &apos;7&apos;&quot; thrown in the test body." type=""><![CDATA[unknown file
+C++ exception with description "No string conversion for ResultType value '7'" thrown in the test body.]]></failure>
+    </testcase>
+  </testsuite>
+</testsuites>
