@@ -41,10 +41,9 @@
 #include "planner/populate_index_plan.h"
 #include "planner/projection_plan.h"
 #include "planner/seq_scan_plan.h"
+#include "planner/alter_plan.h"
 
 #include "storage/data_table.h"
-
-#include "binder/bind_node_visitor.h"
 
 using std::vector;
 using std::unordered_map;
@@ -92,20 +91,17 @@ void Optimizer::OptimizeLoop(int root_group_id,
 }
 
 shared_ptr<planner::AbstractPlan> Optimizer::BuildPelotonPlanTree(
-    const unique_ptr<parser::SQLStatementList> &parse_tree_list,
-    const std::string default_database_name,
+    const std::unique_ptr<parser::SQLStatementList> &parse_tree_list,
     concurrency::TransactionContext *txn) {
-  // Base Case
-  if (parse_tree_list->GetStatements().size() == 0) return nullptr;
+  if (parse_tree_list->GetStatements().empty()) {
+    // TODO: create optimizer exception
+    throw CatalogException(
+        "Parse tree list has no parse trees. Cannot build plan");
+  }
+  // TODO: support multi-statement queries
+  auto parse_tree = parse_tree_list->GetStatement(0);
 
   unique_ptr<planner::AbstractPlan> child_plan = nullptr;
-
-  auto parse_tree = parse_tree_list->GetStatements().at(0).get();
-
-  // Run binder
-  auto bind_node_visitor =
-      make_shared<binder::BindNodeVisitor>(txn, default_database_name);
-  bind_node_visitor->BindNameToNode(parse_tree);
 
   // Handle ddl statement
   bool is_ddl_stmt;
@@ -150,6 +146,14 @@ unique_ptr<planner::AbstractPlan> Optimizer::HandleDDLStatement(
   is_ddl_stmt = true;
   auto stmt_type = tree->GetType();
   switch (stmt_type) {
+    case StatementType::ALTER: {
+      // TODO (shilun) adding support of Alter
+      LOG_TRACE("Adding Alter Plan");
+      unique_ptr<planner::AbstractPlan> alter_plan(
+          new planner::AlterPlan((parser::AlterTableStatement *)tree));
+      ddl_plan = move(alter_plan);
+      break;
+    }
     case StatementType::DROP: {
       LOG_TRACE("Adding Drop plan...");
       unique_ptr<planner::AbstractPlan> drop_plan(

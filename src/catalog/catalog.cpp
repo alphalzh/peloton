@@ -26,6 +26,7 @@
 #include "catalog/table_metrics_catalog.h"
 #include "catalog/trigger_catalog.h"
 #include "concurrency/transaction_manager_factory.h"
+#include "executor/executor_context.h"
 #include "function/date_functions.h"
 #include "function/decimal_functions.h"
 #include "function/old_engine_string_functions.h"
@@ -148,12 +149,12 @@ void Catalog::Bootstrap() {
   DatabaseMetricsCatalog::GetInstance(txn);
   TableMetricsCatalog::GetInstance(txn);
   IndexMetricsCatalog::GetInstance(txn);
-  QueryMetricsCatalog::GetInstance(txn);  
+  QueryMetricsCatalog::GetInstance(txn);
   SettingsCatalog::GetInstance(txn);
   TriggerCatalog::GetInstance(txn);
   LanguageCatalog::GetInstance(txn);
   ProcCatalog::GetInstance(txn);
-  
+
   if (settings::SettingsManager::GetBool(settings::SettingId::brain)) {
     QueryHistoryCatalog::GetInstance(txn);
   }
@@ -789,6 +790,136 @@ std::shared_ptr<TableCatalogObject> Catalog::GetTableObject(
 }
 
 //===--------------------------------------------------------------------===//
+// ALTER TABLE
+//===--------------------------------------------------------------------===//
+
+/**
+ * @brief Helper function for alter table, called internally
+ * @param database_oid database to which the table belongs to
+ * @param table_oid table to which the column belongs to
+ * @param new_schema the new table schema
+ * @param txn the transaction Context
+ * @return TransactionContext ResultType(SUCCESS or FAILURE)
+ */
+ResultType Catalog::AlterTable(
+    UNUSED_ATTRIBUTE oid_t database_oid, UNUSED_ATTRIBUTE oid_t table_oid,
+    UNUSED_ATTRIBUTE std::unique_ptr<catalog::Schema> new_schema,
+    UNUSED_ATTRIBUTE concurrency::TransactionContext *txn) {
+  LOG_TRACE("AlterTable in Catalog");
+
+  // TODO: perform AlterTable Operation
+  return ResultType::SUCCESS;
+}
+
+/**
+ * @brief Add new columns to the table.
+ * @param database_name database to which the table belongs to
+ * @param table_name table to which the column belongs to
+ * @param columns the column to be added
+ * @param txn the transaction Context
+ * @return TransactionContext ResultType(SUCCESS or FAILURE)
+ *
+ */
+ResultType Catalog::AddColumn(
+    UNUSED_ATTRIBUTE const std::string &database_name,
+    UNUSED_ATTRIBUTE const std::string &table_name,
+    UNUSED_ATTRIBUTE const std::vector<std::string> &columns,
+    UNUSED_ATTRIBUTE concurrency::TransactionContext *txn) {
+  // TODO: perform ADD Operation
+  return ResultType::SUCCESS;
+}
+
+/**
+ * @brief Drop the column from the table.
+ * @param database_name database to which the table belongs to
+ * @param table_name table to which the columns belong to
+ * @param columns the columns to be dropped
+ * @param txn the transaction Context
+ * @return TransactionContext ResultType(SUCCESS or FAILURE)
+ */
+
+ResultType Catalog::DropColumn(
+    const std::string &database_name,
+    const std::string &table_name,
+    const std::vector<std::string> &columns,
+    concurrency::TransactionContext *txn) {
+  try {
+    oid_t table_oid = Catalog::GetInstance()
+        ->GetTableObject(database_name, table_name, txn)
+        ->GetTableOid();
+    for (std::string name: columns) {
+      catalog::ColumnCatalog::GetInstance()->DeleteColumn(table_oid, name, txn);
+    }
+  } catch(CatalogException &e){
+    return ResultType::FAILURE;
+  }
+  return ResultType::SUCCESS;
+}
+
+/**
+ * @brief Change the column name in the catalog.
+ * @param database_name database to which the table belongs to
+ * @param table_name table to which the column belongs to
+ * @param columns the column to be dropped
+ * @param txn the transaction Context
+ * @return TransactionContext ResultType(SUCCESS or FAILURE)
+ */
+ResultType Catalog::RenameColumn(const std::string &database_name,
+                                 const std::string &table_name,
+                                 const std::string &old_name,
+                                 const std::string &new_name,
+                                 concurrency::TransactionContext *txn) {
+  if (txn == nullptr) {
+    throw CatalogException("Change Column requires transaction.");
+  }
+
+  if (new_name.size() == 0) {
+    throw CatalogException("Name can not be empty string.");
+  }
+
+  LOG_TRACE("Change Column Name %s to %s", old_name.c_str(),
+            new_name.c_str());
+
+  try {
+    // Get table from the name
+    auto table = Catalog::GetInstance()->GetTableWithName(database_name,
+                                                          table_name, txn);
+    auto schema = table->GetSchema();
+
+    // Currently we only support change the first column name!
+
+    // Check the validity of old name and the new name
+    oid_t columnId = schema->GetColumnID(new_name);
+    if (columnId != INVALID_OID) {
+      throw CatalogException("New column already exists in the table.");
+    }
+    columnId = schema->GetColumnID(old_name);
+    if (columnId == INVALID_OID) {
+      throw CatalogException("Old column does not exist in the table.");
+    }
+
+    // Change column name in the global schema
+    schema->ChangeColumnName(columnId, new_name);
+
+    // Change cached ColumnCatalog
+    oid_t table_oid = Catalog::GetInstance()
+                          ->GetTableObject(database_name, table_name, txn)
+                          ->GetTableOid();
+    catalog::ColumnCatalog::GetInstance()->DeleteColumn(table_oid, old_name,
+                                                        txn);
+    auto new_column = schema->GetColumn(columnId);
+    catalog::ColumnCatalog::GetInstance()->InsertColumn(
+        table_oid, new_column.GetName(), columnId, new_column.GetOffset(),
+        new_column.GetType(), new_column.IsInlined(),
+        new_column.GetConstraints(), pool_.get(), txn);
+
+  } catch (CatalogException &e) {
+    return ResultType::FAILURE;
+  }
+  return ResultType::SUCCESS;
+}
+
+//===--------------------------------------------------------------------===//
 // DEPRECATED
 //===--------------------------------------------------------------------===//
 
@@ -1107,28 +1238,28 @@ void Catalog::InitializeFunctions() {
        * integer functions
        */
       AddBuiltinFunction(
-          "abs", {type::TypeId::TINYINT}, type::TypeId::TINYINT, 
+          "abs", {type::TypeId::TINYINT}, type::TypeId::TINYINT,
           internal_lang, "Abs",
           function::BuiltInFuncType{OperatorId::Abs,
                                     function::DecimalFunctions::_Abs},
           txn);
 
       AddBuiltinFunction(
-          "abs", {type::TypeId::SMALLINT}, type::TypeId::SMALLINT, 
+          "abs", {type::TypeId::SMALLINT}, type::TypeId::SMALLINT,
           internal_lang, "Abs",
           function::BuiltInFuncType{OperatorId::Abs,
                                     function::DecimalFunctions::_Abs},
           txn);
 
       AddBuiltinFunction(
-          "abs", {type::TypeId::INTEGER}, type::TypeId::INTEGER, 
+          "abs", {type::TypeId::INTEGER}, type::TypeId::INTEGER,
           internal_lang, "Abs",
           function::BuiltInFuncType{OperatorId::Abs,
                                     function::DecimalFunctions::_Abs},
           txn);
 
       AddBuiltinFunction(
-          "abs", {type::TypeId::BIGINT}, type::TypeId::BIGINT, 
+          "abs", {type::TypeId::BIGINT}, type::TypeId::BIGINT,
           internal_lang, "Abs",
           function::BuiltInFuncType{OperatorId::Abs,
                                     function::DecimalFunctions::_Abs},

@@ -32,6 +32,10 @@
 #include "common/macros.h"
 #include "container/cuckoo_map.h"
 
+// Impose Row-major to avoid confusion
+#define EIGEN_DEFAULT_TO_ROW_MAJOR
+#include "eigen3/Eigen/Dense"
+
 namespace peloton {
 
 class ItemPointer;
@@ -77,7 +81,7 @@ extern int TEST_TUPLES_PER_TILEGROUP;
 enum class CmpBool {
   CmpFalse = 0,
   CmpTrue = 1,
-  NULL_ = 2 // Note the underscore suffix
+  NULL_ = 2  // Note the underscore suffix
 };
 
 //===--------------------------------------------------------------------===//
@@ -570,6 +574,8 @@ enum class PlanNodeType {
   CREATE = 34,
   POPULATE_INDEX = 35,
   ANALYZE = 36,
+  RENAME = 37,
+  ALTER = 38,
 
   // Communication Nodes
   SEND = 40,
@@ -632,6 +638,20 @@ enum class DropType {
 std::string DropTypeToString(DropType type);
 DropType StringToDropType(const std::string &str);
 std::ostream &operator<<(std::ostream &os, const DropType &type);
+
+//===--------------------------------------------------------------------===//
+// Alter Types
+//===--------------------------------------------------------------------===//
+
+enum class AlterType {
+  INVALID = INVALID_TYPE_ID,  // invalid alter type
+  RENAME = 1,                 // rename table, column, database...
+  ADD = 2,
+  DROP = 3
+};
+std::string AlterTypeToString(AlterType type);
+AlterType StringToAlterType(const std::string &str);
+std::ostream &operator<<(std::ostream &os, const AlterType &type);
 
 template <class E>
 class EnumHash {
@@ -1236,7 +1256,8 @@ enum class DDLType {
   CREATE,
   DROP,
 };
-typedef tbb::concurrent_vector<std::tuple<oid_t, oid_t, oid_t, DDLType>> CreateDropSet;
+typedef tbb::concurrent_vector<std::tuple<oid_t, oid_t, oid_t, DDLType>>
+    CreateDropSet;
 typedef std::vector<std::tuple<oid_t, oid_t, oid_t>> GCObjectSet;
 
 //===--------------------------------------------------------------------===//
@@ -1420,5 +1441,11 @@ enum class SSLLevel {
   SSL_PREFER = 1,
   SSL_VERIIFY = 2,
 };
+
+// Eigen/Matrix types used in brain
+// TODO(saatvik): Generalize Eigen utilities across all types
+typedef std::vector<std::vector<float>> matrix_t;
+typedef Eigen::Matrix<float, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>
+    matrix_eig;
 
 }  // namespace peloton
